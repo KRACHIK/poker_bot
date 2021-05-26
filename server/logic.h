@@ -8,6 +8,7 @@
 #include <QDebug>
 
 #include "base/base.h"
+#include "table_utg_sh.h"
 #include "top_20_starting_hands.h"
 
 #include <vector>
@@ -36,10 +37,15 @@ public:
 private:
     CActor m_Actor;
     CTableTop20StartingHands m_TableTop20StartingHands;
+    CTable_UTG_SH           m_Table_UTG_SH;
 };
 
 
-
+class CFindPlayingCards
+{
+public:
+void static GetStatus(std::vector<std::vector <CTexasHoldem>> Tables, CActor &Actor);
+};
 
 
 /*

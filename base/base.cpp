@@ -70,7 +70,9 @@ CTexasHoldem::CTexasHoldem(std::string StrTexasHoldem)
     }
     else
     {
-        assert(false);
+        m_First = ER::COUNT;
+        m_Second = ER::COUNT;
+        m_Type = 0;
     }
 
 }

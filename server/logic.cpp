@@ -15,6 +15,7 @@ void SingletonServerLogic::Tick()
         qDebug() << "[" << __FUNCTION__ << "] : Ok";
 
         m_TableTop20StartingHands.GetStatus(m_Actor);
+        m_Table_UTG_SH.GetStatus(m_Actor);
 
     }
     else
@@ -34,4 +35,31 @@ CActor &SingletonServerLogic::GetPlayerActor()
 void SingletonServerLogic::SetPlayerActor(CActor Actor)
 {
     m_Actor = Actor;
+}
+
+
+void CFindPlayingCards::GetStatus(std::vector<std::vector<CTexasHoldem> > Tables, CActor &Actor)
+{
+    bool bMath = false;
+    for (size_t i = 0; i < Tables.size(); i++)
+    {
+        for (size_t j = 0; j < Tables[i].size(); j++)
+        {
+            bMath = Tables[i][j].IsMath(Actor.GetPlayingCards());
+
+            if (bMath)
+            {
+                qDebug() << "[" << __FUNCTION__ << "] : OK OK OK OK OK OK  [i][j] = " << " " << i << " " << j;
+                break;
+            }
+
+        }
+        if (bMath)
+        {
+            break;
+        }
+    }
+    if (bMath == false)
+        qDebug() << "[" << __FUNCTION__ << "] :  Find pair card in table and not find. input error or enternal error;";
+
 }

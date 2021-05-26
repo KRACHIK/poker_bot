@@ -195,6 +195,9 @@ public:
 };
 
 
+typedef CPlayingCard PC;
+typedef CTexasHoldem TH;
+
 class CActor
 {
 /* Этот класс Эмитирует человека который нажимает на кноаки в комьютерной игре., и

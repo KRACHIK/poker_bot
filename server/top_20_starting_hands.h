@@ -7,8 +7,6 @@
 
 
 
-typedef CPlayingCard PC;
-typedef CTexasHoldem TH;
 
 
 class CTableTop20StartingHands

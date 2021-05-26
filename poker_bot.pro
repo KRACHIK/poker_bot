@@ -13,6 +13,7 @@ SOURCES += \
         main.cpp \
         server/logic.cpp \
         server/network.cpp \
+        server/table_utg_sh.cpp \
         server/top_20_starting_hands.cpp
 
 RESOURCES += qml.qrc
@@ -34,4 +35,5 @@ HEADERS += \
     interface/input.h \
     server/logic.h \
     server/network.h \
+    server/table_utg_sh.h \
     server/top_20_starting_hands.h
