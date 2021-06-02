@@ -204,6 +204,15 @@ class CActor
 владеет игровыми объектами
 */
 public:
+    CActor() {}
+
+    CActor(QString PlayerName, int PlayerIndex)
+        : m_PlayerName(PlayerName)
+        , m_PlayerIndex(PlayerIndex)
+    {
+
+    }
+
     void ClearPlayingCards()
     {
         m_PlayingCards.clear();
@@ -215,7 +224,13 @@ public:
 
     std::vector<CPlayingCard> GetPlayingCards();
 
+    int PlayerIndex() const;
+
+    QString PlayerName() const;
+
 private:
+    QString m_PlayerName = "";
+    int m_PlayerIndex = 0;
     std::vector<CPlayingCard> m_PlayingCards;
 };
 

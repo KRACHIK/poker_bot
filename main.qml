@@ -2,7 +2,7 @@ import QtQuick 2.9
 import QtQuick.Window 2.2
 
 import QtQuick.Controls 1.4
-import QtQuick.Layouts 1.2
+import QtQuick.Layouts 1.3
 
 
 Window {
@@ -837,6 +837,10 @@ Window {
         id : formPlayerStat
     }
 
+    TablePlayers{
+        id : formTablePlayers
+    }
+
     /* С помощью объекта Connections
          * Устанавливаем соединение с объектом ядра приложения
          * */
@@ -879,6 +883,7 @@ Window {
             text: "Открыть статистику"
             onClicked: {
                 formPlayerStat.show()
+                formTablePlayers.show()
             }
         }
     }

@@ -14,12 +14,10 @@
 
 
 class SingletonApplication
-{
-/*
-    Статический класс который имеет доступ ко всему и отовсюду
+{/*
+     класс который имеет доступ ко всему и отовсюду
 */
-  private:
-
+private:
     SingletonApplication() {  }
 
     SingletonApplication( const SingletonApplication& );
@@ -30,21 +28,15 @@ public:
     void Send();
     void Clear();
     CActor &GetPlayerActor();
-
-    //bool Recov(std::string Msg, EStatus Status);
-
-
-
     void SetUserInputForm(CInput *pUserInputForm);
-
     CInput *GetPtrUserInputForm() const;
-
-
+    std::vector<CActor> GetOtherPlayer();
+    void InsertNewPlayer(int Index, QString Name);
 
 private:
-    CActor m_Actor;
+    CActor m_Actor; // Это модель которая иметирует нас
     CInput * m_pUserInputForm;
-
+    std::vector<CActor> m_OtherPlayers; // Это модель которая иметирует наших соперников
 };
 
 

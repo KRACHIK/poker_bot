@@ -4,6 +4,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include <Qstring>
 
 
 
@@ -18,11 +19,46 @@ public:
 
 signals:
     void sendToQml(int count);
+    void eventInitStol();
 
+    void clearTable();
+
+    void addLinesToTable(
+             int     int_INDEX
+            ,int     int_VISIBILITY_PUSHBUTTON_SBROW_MAPS
+            ,int     int_VISIBILITY_BUTTONS_INCREASE_BID
+            ,QString str_PLAYR_NAME
+            ,QString str_STAVKA
+            ,QString str_TIME_STEP
+            ,QString str_ID_IMG_MARKER_1
+            ,QString str_ID_IMG_MARKER_2
+            );
+        /*
+            ТЕКСТ_ИМЯ_ИГРОКА
+            ТЕКСТ_СТАВКА_ИГРОКА
+            ТЕКСТ_ВРЕМЯ_ХОДА
+            ИД_КАРТИНКИ_МАРКЕР1 BB
+            ИД_КАРТИНКИ_МАРКЕР2 ВТРОЙ
+            ВИДИМОСТЬ_КНОПКИ_СБРОС_КАРТ
+            ВИДИМОСТЬ_КНОПКИ_ПОВЫСИТЬ_СТАВКУ
+        */
 public slots:
     void receiveFromQml(QString ButtonCode);
-    void clear();
+    void clearPlayingCards();
     void confirm();
+
+    void selectedIndex(int index);
+
+    void setPositions(int Index);
+
+    // Перед тем как начинается игра за стол садятся игроки их может быть до 6. этот метод говорит что конкретный i игрок проинициализирован (присутствует)
+    void confiirmInit(int Index, QString Name );
+
+    // когда мы ввсели имена всех игроков, указываем на то, что больше других игроков нету и инициализация игрового стола окончена
+    void initEnd();
+    void dbg();
+    void showTable();
+    void updateGUI();
 private:
     int m_counter {0};
 };

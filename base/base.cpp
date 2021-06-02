@@ -28,6 +28,16 @@ std::vector<CPlayingCard> CActor::GetPlayingCards()
     return m_PlayingCards;
 }
 
+int CActor::PlayerIndex() const
+{
+    return m_PlayerIndex;
+}
+
+QString CActor::PlayerName() const
+{
+    return m_PlayerName;
+}
+
 CPlayingCard::CPlayingCard(ESuit Suit, ER Rank)
     : m_Number ( 0)
     , m_Text  ( "")

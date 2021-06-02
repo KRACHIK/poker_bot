@@ -16,6 +16,8 @@ void SingletonApplication::Send()
 
     CServerNetwork  networkObj;
     networkObj.ClientSay(m_Actor);
+    networkObj.ClientSay(m_OtherPlayers);
+
 }
 
 CActor &SingletonApplication::GetPlayerActor()
@@ -31,6 +33,20 @@ void SingletonApplication::SetUserInputForm(CInput *pUserInputForm)
 CInput *SingletonApplication::GetPtrUserInputForm() const
 {
     return m_pUserInputForm;
+}
+
+void SingletonApplication::InsertNewPlayer(int Index, QString Name)
+{
+    qDebug() << "[" << __FUNCTION__ << "] : Index "  << Index << " Name  " <<  Name;
+
+    CActor Actor (Name, Index);
+
+    m_OtherPlayers.push_back(Actor);
+}
+
+std::vector<CActor> SingletonApplication::GetOtherPlayer()
+{
+    return m_OtherPlayers;
 }
 
 

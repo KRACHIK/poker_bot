@@ -33,11 +33,13 @@ public:
     CActor & GetPlayerActor();
 
     void SetPlayerActor(CActor Actor);
+    void SetOtherPlayer(std::vector<CActor> OtherPlayers);
 
 private:
     CActor m_Actor;
     CTableTop20StartingHands m_TableTop20StartingHands;
     CTable_UTG_SH           m_Table_UTG_SH;
+    std::vector<CActor>     m_OtherPlayers;
 };
 
 

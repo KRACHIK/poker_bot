@@ -245,7 +245,7 @@ void CInput::receiveFromQml(QString ButtonCode)
     emit sendToQml(m_counter);
 }
 
-void CInput::clear()
+void CInput::clearPlayingCards()
 {
     qDebug() << "[" << __FUNCTION__ << "] : ";
     SingletonApplication::GetInstance().Clear();
@@ -256,4 +256,93 @@ void CInput::confirm()
 {
     qDebug() << "[" << __FUNCTION__ << "] : ";
     SingletonApplication::GetInstance().Send();
+}
+
+void CInput::selectedIndex(int index)
+{
+    qDebug() << "[" << __FUNCTION__ << "] : " << index;
+
+
+    //showTable();
+}
+
+void CInput::setPositions(int Index)
+{
+    qDebug() << "[" << __FUNCTION__ << "] : " << Index;
+    SingletonApplication::GetInstance();
+}
+
+void CInput::confiirmInit(int Index, QString Name)
+{
+    qDebug() << "[" << __FUNCTION__ << "] : " << Index << " Name: " << Name;
+    SingletonApplication::GetInstance().InsertNewPlayer(Index, Name);
+}
+
+void CInput::initEnd()
+{
+    qDebug() << "[" << __FUNCTION__ << "] : " ;
+    SingletonApplication::GetInstance().Send();
+
+}
+
+void CInput::dbg()
+{
+    qDebug() << "[" << __FUNCTION__ << "] : " ;
+    emit addLinesToTable(
+                 1
+                ,1
+                ,1
+                , "RR"
+                ," 10$"
+                ," 3Sec"
+                ," IMG_BB.PNG"
+                ," IMG_WOOD.png"
+                );
+
+    emit addLinesToTable(
+                 1
+                ,1
+                ,1
+                ,    "NIK"
+                ," 30$"
+                ," 11Sec"
+                ," IMG_BB.PNG"
+                ," IMG_WOOD.png"
+                );
+
+
+}
+
+void CInput::showTable()
+{
+    emit clearTable();
+    for ( CActor it  :  SingletonApplication::GetInstance().GetOtherPlayer()  )
+    {
+        int     int_INDEX                                    = it.PlayerIndex() ;
+        int     int_VISIBILITY_PUSHBUTTON_SBROW_MAPS         = 0 ;
+        int     int_VISIBILITY_BUTTONS_INCREASE_BID          = 0 ;
+        QString str_PLAYR_NAME                               = it.PlayerName() ;
+        QString str_STAVKA                                   = "CPP_STAVKA_NOT_INIT" ;
+        QString str_TIME_STEP                                ="CPP_NOT_INIT";
+        QString str_ID_IMG_MARKER_1                          ="CPP_Not_INIT" ;
+        QString str_ID_IMG_MARKER_2                          ="CPP_Not_INIT" ;
+
+        emit  addLinesToTable(
+                    int_INDEX
+                    ,int_VISIBILITY_PUSHBUTTON_SBROW_MAPS
+                    ,int_VISIBILITY_BUTTONS_INCREASE_BID
+                    ,str_PLAYR_NAME
+                    ,str_STAVKA
+                    ,str_TIME_STEP
+                    ,str_ID_IMG_MARKER_1
+                    ,str_ID_IMG_MARKER_2
+                    );
+
+    }
+
+}
+
+void CInput::updateGUI()
+{
+    showTable();
 }

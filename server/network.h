@@ -9,8 +9,11 @@ public:
     CServerNetwork();
 
     bool ServerSay(std::string Msg, EStatus Status);
+    bool ServerSayInitStol(std::string Msg );
 
     void ClientSay( CActor  Actor );
+    void ClientSay( std::vector<CActor> OtherPlayers );
+
 };
 
 #endif // NETWORK_H

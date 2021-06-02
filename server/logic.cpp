@@ -37,6 +37,12 @@ void SingletonServerLogic::SetPlayerActor(CActor Actor)
     m_Actor = Actor;
 }
 
+void SingletonServerLogic::SetOtherPlayer(std::vector<CActor> OtherPlayers)
+{
+    qDebug() << "[" << __FUNCTION__ << "] :   ";
+    m_OtherPlayers = OtherPlayers;
+}
+
 
 void CFindPlayingCards::GetStatus(std::vector<std::vector<CTexasHoldem> > Tables, CActor &Actor)
 {
