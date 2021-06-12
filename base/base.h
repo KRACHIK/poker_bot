@@ -16,6 +16,8 @@ enum EStatus
     NONE,
     STATUS_OK,
     STATUS_ERROR,
+    STATUS_FIND,
+    STATUS_NOT_FIND,
     STATUS_COUNT
 };
 
@@ -65,6 +67,16 @@ public:
 
     ER GetRank();
     ESuit GetSuit ();
+
+    void SetText(std::string Text)
+    {
+         m_Text = Text;
+    }
+
+    std::string GetText( ) const
+    {
+        return m_Text;
+    }
 
 private:
     int m_Number = 0;
@@ -213,10 +225,9 @@ public:
 
     }
 
-    void ClearPlayingCards()
-    {
-        m_PlayingCards.clear();
-    }
+    void upStavka(QString stavkaValueStr);
+
+    void ClearPlayingCards();
 
     bool IsOkInput();
 
@@ -228,11 +239,37 @@ public:
 
     QString PlayerName() const;
 
+   float GetStavka() const;
+
+   void eventClearPlayingCardsForOtherPlayer(int Value);
+
+   bool isEventClearPlayingCardsForOtherPlayer();
+
 private:
     QString m_PlayerName = "";
     int m_PlayerIndex = 0;
     std::vector<CPlayingCard> m_PlayingCards;
+    float m_fStavka = 0.0f;
+    bool m_bEventClearPlayingCardsForOtherPlayer = false;
 };
 
+
+
+
+class CServerLogicAnswerData
+{
+public:
+
+    void SetStatusTable_UTG_SH(bool Value);
+
+    void SetStatusTable_Top20(bool Value);
+
+    EStatus GetStatusTop20() const;
+    EStatus GetStatusUTG_SH() const;
+
+private:
+    EStatus m_Top20 = EStatus::NONE;
+    EStatus m_bUTG_SH = EStatus::NONE;
+};
 
 #endif // BASE_H

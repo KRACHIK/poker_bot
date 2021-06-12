@@ -31,6 +31,14 @@ public:
     void SetUserInputForm(CInput *pUserInputForm);
     CInput *GetPtrUserInputForm() const;
     std::vector<CActor> GetOtherPlayer();
+
+
+     CActor & GetOtherPlayer(int index)
+     {
+         return m_OtherPlayers[index];
+     }
+
+
     void InsertNewPlayer(int Index, QString Name);
 
 private:

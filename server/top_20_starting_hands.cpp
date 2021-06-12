@@ -1,7 +1,9 @@
 #include "top_20_starting_hands.h"
 
 
-void CTableTop20StartingHands::GetStatus(CActor &Actor)
+//#include "logic.h"
+
+bool CTableTop20StartingHands::GetStatus(CActor &Actor)
 {
     bool bMath = false;
     for (size_t i = 0; i < m_Tables.size(); i++)
@@ -25,6 +27,16 @@ void CTableTop20StartingHands::GetStatus(CActor &Actor)
     if (bMath == false)
         qDebug() << "[" << __FUNCTION__ << "] :  Find pair card in table and not find. input error or enternal error;";
 
-    int dfgdfgdfgdfg345=43534543;
-    //Actor.Is
+    return bMath;
+}
+
+bool CTableTop20StartingHands::GetStatus_v2_shared_algo(CActor &Actor)
+{
+    //CFindPlayingCards::GetStatus(m_Tables, Actor);
+    return false;
+}
+
+std::vector<std::vector<CTexasHoldem> > CTableTop20StartingHands::GetTables() const
+{
+    return m_Tables;
 }

@@ -46,7 +46,7 @@ private:
 class CFindPlayingCards
 {
 public:
-void static GetStatus(std::vector<std::vector <CTexasHoldem>> Tables, CActor &Actor);
+static bool GetStatus(std::vector<std::vector <CTexasHoldem>> Tables, CActor &Actor);
 };
 
 

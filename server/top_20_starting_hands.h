@@ -5,10 +5,6 @@
 
 #include <vector>
 
-
-
-
-
 class CTableTop20StartingHands
 {
 public:
@@ -19,7 +15,11 @@ public:
         TH t(ER::ACE, ER::ACE, 'c');
     }
 
-    void GetStatus( CActor &  Actor );
+    bool GetStatus( CActor &  Actor ); // del
+
+    bool GetStatus_v2_shared_algo( CActor &  Actor );
+
+    std::vector<std::vector<CTexasHoldem> > GetTables() const;
 
 private:
     std::vector<std::vector <CTexasHoldem> > m_Tables =

@@ -7,6 +7,21 @@
 
 
 
+void CActor::upStavka(QString stavkaValueStr)
+{
+    qDebug() << "[" << __FUNCTION__ << "] : ";
+
+    double fVal = std::atof(stavkaValueStr.toStdString().c_str());
+    m_fStavka  += (float) fVal ;
+}
+
+void CActor::ClearPlayingCards()
+{
+    qDebug() << "[" << __FUNCTION__ << "] :  before clear. m_PlayingCards.size()=" << m_PlayingCards.size();
+    m_PlayingCards.clear();
+
+}
+
 bool CActor::IsOkInput()
 {
     if ( GetPlayingCards().size() == TEXAS_HOLDEM_PLAYING_CARD  )
@@ -36,6 +51,21 @@ int CActor::PlayerIndex() const
 QString CActor::PlayerName() const
 {
     return m_PlayerName;
+}
+
+float CActor::GetStavka() const
+{
+    return m_fStavka ;
+}
+
+void CActor::eventClearPlayingCardsForOtherPlayer(int Value)
+{
+    m_bEventClearPlayingCardsForOtherPlayer =  true ;
+}
+
+bool CActor::isEventClearPlayingCardsForOtherPlayer()
+{
+    return  m_bEventClearPlayingCardsForOtherPlayer ;
 }
 
 CPlayingCard::CPlayingCard(ESuit Suit, ER Rank)
@@ -97,7 +127,7 @@ CTexasHoldem::CTexasHoldem(ER First, ER Second, char Type)
 
 bool CTexasHoldem::IsMath(std::vector<CPlayingCard> PlayingCards)
 {
-/*
+    /*
     Задача сравнить 2 пары карт которые раздали игроку, с 2мя картами из эталонной таблицы
     Решение. записавывем свои карты и карты из таблицы в вектор и сортируем оба вектора зате сравниваем попаро элементы из обоих векторов
 */
@@ -116,14 +146,14 @@ bool CTexasHoldem::IsMath(std::vector<CPlayingCard> PlayingCards)
 
 
     std::sort(PlayingCards.begin(), PlayingCards.end(),
-        []( CPlayingCard   a,  CPlayingCard  b) -> bool
+              []( CPlayingCard   a,  CPlayingCard  b) -> bool
     {
         return a.GetRank() < b.GetRank();
     });
 
 
     std::sort(TableEtalonCards.begin(), TableEtalonCards.end(),
-        []( CPlayingCard   a,  CPlayingCard  b) -> bool
+              []( CPlayingCard   a,  CPlayingCard  b) -> bool
     {
         return a.GetRank() < b.GetRank();
     });
@@ -152,24 +182,38 @@ bool CTexasHoldem::IsMath(std::vector<CPlayingCard> PlayingCards)
         PlayingCardsTypes = 's'; // нет они одной масти
     }
 
-    ER InputFirst = PlayingCards[0].GetRank();
-    ER InputSecond= PlayingCards[1].GetRank();
 
     if (bMath)
     {
+        ER InputFirst = PlayingCards[0].GetRank();
+        ER InputSecond= PlayingCards[1].GetRank();
 
-        if (PlayingCardsTypes == m_Type)
-        {
-            qDebug() << "[" << __FUNCTION__ << "] : Input [" << InputFirst <<"] [" << InputSecond << "] Math for db "
-                     << "  Value ["  << GetFirst() << "," << GetSecond() << "]"
-                     << " Type= " << m_Type;
-        }
-        else
-        {
-            bMath = false;
-        }
+        qDebug() << "[" << __FUNCTION__ << "] : Input [" << InputFirst <<"] [" << InputSecond << "] Math for db "
+                 << "  Value ["  << GetFirst() << "," << GetSecond() << "]"
+                 << " Type= " << m_Type;
+
     }
 
     return bMath;
 
+}
+
+void CServerLogicAnswerData::SetStatusTable_UTG_SH(bool Value)
+{
+    m_bUTG_SH = Value ? EStatus::STATUS_FIND : EStatus::STATUS_NOT_FIND;
+}
+
+void CServerLogicAnswerData::SetStatusTable_Top20(bool Value)
+{
+    m_Top20 = Value ? EStatus::STATUS_FIND : EStatus::STATUS_NOT_FIND;
+}
+
+EStatus CServerLogicAnswerData::GetStatusTop20() const
+{
+    return m_Top20;
+}
+
+EStatus CServerLogicAnswerData::GetStatusUTG_SH() const
+{
+    return m_bUTG_SH;
 }

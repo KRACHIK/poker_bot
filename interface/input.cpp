@@ -57,6 +57,10 @@ void CInput::receiveFromQml(QString ButtonCode)
         {
             PlayingCard = CPlayingCard(ESuit::SUIT_SPADE_PIKA, ER::THREE);
         }
+        else if(ButtonCode == "3b")
+        {
+            PlayingCard = CPlayingCard(ESuit::SUIT_DIAMOND_BUBA, ER::THREE);
+        }
         else if(ButtonCode == "4b")
         {
             PlayingCard = CPlayingCard(ESuit::SUIT_DIAMOND_BUBA, ER::FOUR);
@@ -236,6 +240,12 @@ void CInput::receiveFromQml(QString ButtonCode)
         {
             assert(false);
         }
+
+        std::string Path = std::string("res/") +  std::string(ButtonCode.toStdString()) + std::string(".PNG");
+        PlayingCard.SetText(Path);
+
+
+
         SingletonApplication::GetInstance().GetPlayerActor().PushBack(PlayingCard);
     }
 
@@ -243,19 +253,45 @@ void CInput::receiveFromQml(QString ButtonCode)
     // Увеличиваем счётчик и высылаем сигнал с его значением
     ++m_counter;
     emit sendToQml(m_counter);
+    renderSelfCard();
 }
 
 void CInput::clearPlayingCards()
 {
     qDebug() << "[" << __FUNCTION__ << "] : ";
     SingletonApplication::GetInstance().Clear();
-
+    renderSelfCard();
 }
 
 void CInput::confirm()
 {
     qDebug() << "[" << __FUNCTION__ << "] : ";
     SingletonApplication::GetInstance().Send();
+}
+
+void CInput::renderSelfCard()
+{
+    qDebug() << "[" << __FUNCTION__ << "] : ";
+
+    std::vector<CPlayingCard> PlayingCard = SingletonApplication::GetInstance().GetPlayerActor().GetPlayingCards();
+
+    if (PlayingCard.size() == 1)
+    {
+        std::string Path = PlayingCard[0].GetText();
+        emit  setIndicatorFirstPlayerCard  (Path.c_str());
+
+
+    }
+    else if (PlayingCard.size() == 2)
+    {
+        std::string Path2 = PlayingCard[1].GetText();
+        emit setIndicatorSecondPlayerCard (Path2.c_str());
+    }
+    else
+    {
+        emit setIndicatorFirstPlayerCard  ("");
+        emit setIndicatorSecondPlayerCard ( "" );
+    }
 }
 
 void CInput::selectedIndex(int index)
@@ -288,28 +324,6 @@ void CInput::initEnd()
 void CInput::dbg()
 {
     qDebug() << "[" << __FUNCTION__ << "] : " ;
-    emit addLinesToTable(
-                 1
-                ,1
-                ,1
-                , "RR"
-                ," 10$"
-                ," 3Sec"
-                ," IMG_BB.PNG"
-                ," IMG_WOOD.png"
-                );
-
-    emit addLinesToTable(
-                 1
-                ,1
-                ,1
-                ,    "NIK"
-                ," 30$"
-                ," 11Sec"
-                ," IMG_BB.PNG"
-                ," IMG_WOOD.png"
-                );
-
 
 }
 
@@ -322,10 +336,21 @@ void CInput::showTable()
         int     int_VISIBILITY_PUSHBUTTON_SBROW_MAPS         = 0 ;
         int     int_VISIBILITY_BUTTONS_INCREASE_BID          = 0 ;
         QString str_PLAYR_NAME                               = it.PlayerName() ;
-        QString str_STAVKA                                   = "CPP_STAVKA_NOT_INIT" ;
-        QString str_TIME_STEP                                ="CPP_NOT_INIT";
-        QString str_ID_IMG_MARKER_1                          ="CPP_Not_INIT" ;
-        QString str_ID_IMG_MARKER_2                          ="CPP_Not_INIT" ;
+        QString str_STAVKA                                   = "STAVKA: " + QString ( std::to_string(it.GetStavka()).c_str() ) ;
+        float floatStavka                                    = it.GetStavka();
+
+        QString str_TIME_STEP                                = "Not init";
+        if (it.isEventClearPlayingCardsForOtherPlayer())
+        {
+            str_TIME_STEP = "PLAYER CARDS: FOOLD" ;
+        }
+        else
+        {
+            str_TIME_STEP = "Карты держит на руках";
+        }
+
+        QString str_ID_IMG_MARKER_1                          = "CPP_Not_INIT"  ;
+        QString str_ID_IMG_MARKER_2                          = "CPP_Not_INIT" ;
 
         emit  addLinesToTable(
                     int_INDEX
@@ -336,6 +361,7 @@ void CInput::showTable()
                     ,str_TIME_STEP
                     ,str_ID_IMG_MARKER_1
                     ,str_ID_IMG_MARKER_2
+                    , "1" //std::to_string( floatStavka ).c_str()
                     );
 
     }
@@ -344,5 +370,22 @@ void CInput::showTable()
 
 void CInput::updateGUI()
 {
+    qDebug() << "[" << __FUNCTION__ << "] : " ;
     showTable();
+}
+
+void CInput::clearPlayingCardsForThisPlayer(int index)
+{
+    qDebug() << "[" << __FUNCTION__ << "] : " ;
+    SingletonApplication::GetInstance().GetOtherPlayer(index).ClearPlayingCards();
+    SingletonApplication::GetInstance().GetOtherPlayer(index).eventClearPlayingCardsForOtherPlayer(/*true*/1) ;
+    SingletonApplication::GetInstance().Send();
+}
+
+void CInput::upStavkaForThisPlayer(int index, QString stavkaValueStr)
+{
+    qDebug() << "[" << __FUNCTION__ << "] : " ;
+    SingletonApplication::GetInstance().GetOtherPlayer(index).upStavka(stavkaValueStr);
+
+    SingletonApplication::GetInstance().Send();
 }

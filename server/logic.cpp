@@ -14,8 +14,24 @@ void SingletonServerLogic::Tick()
     {
         qDebug() << "[" << __FUNCTION__ << "] : Ok";
 
-        m_TableTop20StartingHands.GetStatus(m_Actor);
-        m_Table_UTG_SH.GetStatus(m_Actor);
+        CServerLogicAnswerData ServerLogicAnswerData;
+
+        //bool bFindTop20 = m_TableTop20StartingHands.GetStatus(m_Actor);
+        //qDebug() << "[" << __FUNCTION__ << "] : Поиск в таблице Top20 используя старый алго bFindTop20 =" << bFindTop20;
+
+        bool bFindTop20_v2 = CFindPlayingCards::GetStatus(m_TableTop20StartingHands.GetTables(), m_Actor);
+        ServerLogicAnswerData.SetStatusTable_Top20 (bFindTop20_v2);
+        qDebug() << "[" << __FUNCTION__ << "] : Поиск в таблице Top20 используя обобщеный механизм bFindTop20_v2 =" << bFindTop20_v2;
+
+
+        bool bUTG_SH = CFindPlayingCards::GetStatus(m_Table_UTG_SH.GetTable() , m_Actor);
+        ServerLogicAnswerData.SetStatusTable_UTG_SH(bUTG_SH);
+        qDebug() << "[" << __FUNCTION__ << "] : Поиск в таблице m_Table_UTG_SH используя обобщеный механизм bUTG_SH =" << bUTG_SH;
+
+
+        qDebug() << "[" << __FUNCTION__ << "] : Error!";
+        CServerNetwork networkObj;
+        networkObj.ServerSay( ServerLogicAnswerData );
 
     }
     else
@@ -44,7 +60,7 @@ void SingletonServerLogic::SetOtherPlayer(std::vector<CActor> OtherPlayers)
 }
 
 
-void CFindPlayingCards::GetStatus(std::vector<std::vector<CTexasHoldem> > Tables, CActor &Actor)
+bool CFindPlayingCards::GetStatus(std::vector<std::vector<CTexasHoldem> > Tables, CActor &Actor)
 {
     bool bMath = false;
     for (size_t i = 0; i < Tables.size(); i++)
@@ -68,4 +84,5 @@ void CFindPlayingCards::GetStatus(std::vector<std::vector<CTexasHoldem> > Tables
     if (bMath == false)
         qDebug() << "[" << __FUNCTION__ << "] :  Find pair card in table and not find. input error or enternal error;";
 
+    return bMath;
 }

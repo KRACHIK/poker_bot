@@ -854,6 +854,21 @@ Window {
         onSendToQml: {
             labelCount.text = count // Устанавливаем счётчик в текстовый лейбл
         }
+
+
+
+
+        onSetIndicatorFirstPlayerCard :  {
+
+            textPlayerCard.text = str
+            imageFirstPlayerCards.source = str
+        }
+
+        onSetIndicatorSecondPlayerCard : {
+
+            textPlayerCard.text = str
+            imageSecondPlayerCards.source = str
+        }
     }
 
 
@@ -873,10 +888,19 @@ Window {
         height: 57
         Button {
             text: "Избавиться от этих плохих карт"
+
+            onClicked: { FormUserInput.clearPlayingCards()  }
         }
 
         Button {
             text: "Повысить ставку"
+            onClicked: {
+                FormUserInput.upStavkaForThisPlayer(0, textFieldStavka.text)
+            }
+        }
+
+        TextField{
+            id: textFieldStavka
         }
 
         Button {
@@ -891,21 +915,73 @@ Window {
 
     RowLayout {
         x: 13
-        y: 417
+        y: 402
         width: 313
         height: 44
 
 
-        Button
-        {
-            text: "Очистить свои карты"
-            onClicked: { FormUserInput.clear() }
-        }
 
         Button
         {
             text: "Отправить на сервер свой ход"
             onClicked: { FormUserInput.confirm() }
+        }
+    }
+
+    RowLayout {
+        id : rowlayoutStat
+        x: 369;  y: 412
+        width: 313
+        height: 44
+
+        Rectangle{
+            width:  rowlayoutStat.width
+            height: rowlayoutStat.height
+            border.color: "black"
+
+            Text {
+                id: name
+                x: 8
+                y: 16
+                text: qsTr("Твои карты ")
+            }
+
+            Rectangle{
+                x: 134
+                y: 0
+                width:  46
+                height: 44
+                border.color: "black"
+
+                Layout.minimumHeight: 40
+                Layout.minimumWidth: 1
+                Image {
+                      id: imageSecondPlayerCards
+                    source: "res/8c.PNG"
+                }
+            }
+
+            Rectangle{
+                x: 75
+                y: 0
+                width:  46
+                height: 44
+                border.color: "black"
+
+                Layout.minimumHeight: 40
+                Layout.minimumWidth: 1
+                Image {
+                    id: imageFirstPlayerCards
+                    source: "res/8c.PNG"
+                }
+            }
+
+            Text {
+                id: textPlayerCard
+                x: 190
+                y: 16
+                text: qsTr("7Чирва Кароль Креста")
+            }
         }
     }
 
@@ -917,8 +993,4 @@ Window {
 
 }
 
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:0.75}
-}
-##^##*/
+

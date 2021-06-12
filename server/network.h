@@ -8,6 +8,9 @@ class CServerNetwork
 public:
     CServerNetwork();
 
+
+    bool ServerSay( CServerLogicAnswerData   ServerLogicAnswerData );
+
     bool ServerSay(std::string Msg, EStatus Status);
     bool ServerSayInitStol(std::string Msg );
 

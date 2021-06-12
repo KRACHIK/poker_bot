@@ -23,6 +23,10 @@ signals:
 
     void clearTable();
 
+    void setText_top20( QString str);
+
+    void setText_UTG_SH(QString str);
+
     void addLinesToTable(
              int     int_INDEX
             ,int     int_VISIBILITY_PUSHBUTTON_SBROW_MAPS
@@ -32,6 +36,7 @@ signals:
             ,QString str_TIME_STEP
             ,QString str_ID_IMG_MARKER_1
             ,QString str_ID_IMG_MARKER_2
+            ,QString floatStavka
             );
         /*
             ТЕКСТ_ИМЯ_ИГРОКА
@@ -42,10 +47,19 @@ signals:
             ВИДИМОСТЬ_КНОПКИ_СБРОС_КАРТ
             ВИДИМОСТЬ_КНОПКИ_ПОВЫСИТЬ_СТАВКУ
         */
+
+
+
+    void setIndicatorFirstPlayerCard (QString str);
+    void setIndicatorSecondPlayerCard (QString str);
+
+
 public slots:
     void receiveFromQml(QString ButtonCode);
     void clearPlayingCards();
     void confirm();
+
+    void renderSelfCard();
 
     void selectedIndex(int index);
 
@@ -59,6 +73,10 @@ public slots:
     void dbg();
     void showTable();
     void updateGUI();
+
+    void clearPlayingCardsForThisPlayer(int index);
+    void upStavkaForThisPlayer(int index, QString StavkaValue);
+
 private:
     int m_counter {0};
 };
