@@ -217,3 +217,13 @@ EStatus CServerLogicAnswerData::GetStatusUTG_SH() const
 {
     return m_bUTG_SH;
 }
+
+bool CServerLogicAnswerData::IsActionFOLD_For_TAB_UTG_SH() const
+{
+    return m_bActionFOLD_For_TAB_UTG_SH;
+}
+
+void CServerLogicAnswerData::SetActionFOLD_For_TAB_UTG_SH(bool bActionFOLD_For_TAB_UTG_SH)
+{
+    m_bActionFOLD_For_TAB_UTG_SH = bActionFOLD_For_TAB_UTG_SH;
+}

@@ -53,6 +53,13 @@ bool CServerNetwork::ServerSay( CServerLogicAnswerData  ServerLogicAnswerData)
 #endif
     emit SingletonApplication::GetInstance().GetPtrUserInputForm()->setText_top20( MsgTop20);
     emit SingletonApplication::GetInstance().GetPtrUserInputForm()->setText_UTG_SH(MsgUTG_SH);
+    \
+    if (ServerLogicAnswerData.IsActionFOLD_For_TAB_UTG_SH())
+    {
+        qDebug() << "[" << __FUNCTION__ << "] : DESIGN MAKER FOLD";
+        emit SingletonApplication::GetInstance().GetPtrUserInputForm()->serverCmd_Fold();
+    }
+
     return false;
 }
 

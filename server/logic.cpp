@@ -28,6 +28,11 @@ void SingletonServerLogic::Tick()
         ServerLogicAnswerData.SetStatusTable_UTG_SH(bUTG_SH);
         qDebug() << "[" << __FUNCTION__ << "] : Поиск в таблице m_Table_UTG_SH используя обобщеный механизм bUTG_SH =" << bUTG_SH;
 
+        if (  bUTG_SH == false)
+        {
+            ServerLogicAnswerData.SetActionFOLD_For_TAB_UTG_SH(true);
+        }
+
 
         qDebug() << "[" << __FUNCTION__ << "] : Error!";
         CServerNetwork networkObj;

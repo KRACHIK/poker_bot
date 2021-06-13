@@ -856,7 +856,9 @@ Window {
         }
 
 
-
+        onServerCmd_Fold : {
+            FormUserInput.clearPlayingCards();
+        }
 
         onSetIndicatorFirstPlayerCard :  {
 

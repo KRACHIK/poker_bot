@@ -27,6 +27,8 @@ signals:
 
     void setText_UTG_SH(QString str);
 
+    void serverCmd_Fold();
+
     void addLinesToTable(
              int     int_INDEX
             ,int     int_VISIBILITY_PUSHBUTTON_SBROW_MAPS
