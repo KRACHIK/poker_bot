@@ -7,6 +7,48 @@ CInput::CInput(QObject* parent) : QObject(parent)
 {
 }
 
+void CInput::ucazatbPositiyiStart()  {
+    qDebug() << "[" << __FUNCTION__ << "] : m_SelectedIndex=" <<  m_SelectedIndex
+             << "Кликни мышью на человека, которому присвоен маркер D";
+}
+
+void CInput::ucazatbPositiyiStop()  {
+    qDebug() << "[" << __FUNCTION__ << "] : m_SelectedIndex=" <<  m_SelectedIndex
+             << "я подтверждаю что человек с индексом "
+             << "m_SelectedIndex=" <<  m_SelectedIndex
+             << "вледеет маркером D";
+
+    SingletonApplication::GetInstance().GetOtherPlayer(); // kr4
+
+
+    int NewIndex_1 = (m_SelectedIndex + 1) % 6;
+    int NewIndex_2 = (m_SelectedIndex + 2 ) % 6;
+
+    qDebug() << "[" << __FUNCTION__ << "] : новпя позиция для ставки 1.0 =" <<  NewIndex_1;
+    qDebug() << "[" << __FUNCTION__ << "] : новпя Следующая позиция для ставки 0.5=" <<  NewIndex_2;
+
+
+    /*
+
+                5  <----
+            1
+            2
+            3
+            4
+            5       <------- +1
+            6<-END  <------- +2
+            7
+            8
+            9
+            10
+            11
+
+
+        */
+
+
+}
+
 void CInput::receiveFromQml(QString ButtonCode)
 {
     qDebug() << "[" << __FUNCTION__ << "] : "<< ButtonCode;
@@ -297,7 +339,7 @@ void CInput::renderSelfCard()
 void CInput::selectedIndex(int index)
 {
     qDebug() << "[" << __FUNCTION__ << "] : " << index;
-
+    m_SelectedIndex  = index;
 
     //showTable();
 }

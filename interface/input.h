@@ -56,7 +56,15 @@ signals:
     void setIndicatorSecondPlayerCard (QString str);
 
 
+
+
 public slots:
+
+
+    void ucazatbPositiyiStart();
+
+    void ucazatbPositiyiStop();
+
     void receiveFromQml(QString ButtonCode);
     void clearPlayingCards();
     void confirm();
@@ -81,6 +89,7 @@ public slots:
 
 private:
     int m_counter {0};
+    int m_SelectedIndex = 0;
 };
 
 

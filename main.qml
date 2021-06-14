@@ -13,7 +13,7 @@ Window {
 
     RowLayout {
         x: 13
-        y: 49
+        y: 3
         width: 1131
         height: 72
 
@@ -240,7 +240,7 @@ Window {
 
     RowLayout {
         x: 13
-        y: 118
+        y: 58
         width: 1131
         height: 72
 
@@ -467,7 +467,7 @@ Window {
 
     RowLayout {
         x: 13
-        y: 191
+        y: 114
         width: 1131
         height: 72
         Button {
@@ -629,7 +629,7 @@ Window {
 
     RowLayout {
         x: 13
-        y: 269
+        y: 175
         width: 1131
         height: 72
         Button {
@@ -791,7 +791,7 @@ Window {
 
     RowLayout {
         x: 788
-        y: 339
+        y: 230
         width: 356
         height: 72
         Button {
@@ -885,8 +885,8 @@ Window {
 
     RowLayout {
         x: 13
-        y: 354
-        width: 447
+        y: 291
+        width: 1001
         height: 57
         Button {
             text: "Избавиться от этих плохих карт"
@@ -912,12 +912,22 @@ Window {
                 formTablePlayers.show()
             }
         }
+
+        Button {
+            text: "Палка указалка(на позицию) Часть 1"
+            onClicked: { FormUserInput.ucazatbPositiyiStart() }
+        }
+
+        Button {
+            text: "Палка указалка(на позицию) Часть 2"
+            onClicked: { FormUserInput.ucazatbPositiyiStop() }
+        }
     }
 
 
     RowLayout {
-        x: 13
-        y: 402
+        x: 18
+        y: 417
         width: 313
         height: 44
 
@@ -959,7 +969,7 @@ Window {
                 Layout.minimumWidth: 1
                 Image {
                       id: imageSecondPlayerCards
-                    source: "res/8c.PNG"
+                    source: " "
                 }
             }
 
@@ -974,7 +984,7 @@ Window {
                 Layout.minimumWidth: 1
                 Image {
                     id: imageFirstPlayerCards
-                    source: "res/8c.PNG"
+                    source: " "
                 }
             }
 
@@ -996,3 +1006,9 @@ Window {
 }
 
 
+
+/*##^##
+Designer {
+    D{i:0;formeditorZoom:1.25}
+}
+##^##*/
