@@ -245,12 +245,17 @@ public:
 
    bool isEventClearPlayingCardsForOtherPlayer();
 
+   QString GetStrPointerToPosition() const;
+   void SetStrPointerToPosition(const QString &value);
+
 private:
-    QString m_PlayerName = "";
-    int m_PlayerIndex = 0;
-    std::vector<CPlayingCard> m_PlayingCards;
+   QString m_PlayerName = "";
+   int m_PlayerIndex = 0;
+   std::vector<CPlayingCard> m_PlayingCards;
     float m_fStavka = 0.0f;
     bool m_bEventClearPlayingCardsForOtherPlayer = false;
+    QString  str_PointerToPositio = "cpp_not_init";
+       // BB SB..
 };
 
 

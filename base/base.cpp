@@ -68,13 +68,23 @@ bool CActor::isEventClearPlayingCardsForOtherPlayer()
     return  m_bEventClearPlayingCardsForOtherPlayer ;
 }
 
+QString CActor::GetStrPointerToPosition() const
+{
+    return str_PointerToPositio;
+}
+
+void CActor::SetStrPointerToPosition(const QString &value)
+{
+    str_PointerToPositio = value;
+}
+
 CPlayingCard::CPlayingCard(ESuit Suit, ER Rank)
     : m_Number ( 0)
     , m_Text  ( "")
     , m_Suit (Suit)
     , m_Rank (Rank)
 {
-
+    
 }
 
 CPlayingCard::CPlayingCard(int Number, std::string Text)

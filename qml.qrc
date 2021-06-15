@@ -58,6 +58,14 @@
         <file>res/qc.PNG</file>
         <file>res/qp.PNG</file>
         <file>res/romb_blue.PNG</file>
+
+        <file>res/BU.PNG</file>
+        <file>res/SB.PNG</file>
+        <file>res/BB.PNG</file>
+        <file>res/EP.PNG</file>
+        <file>res/MP.PNG</file>
+        <file>res/CO.PNG</file>
+
     </qresource>
 
 </RCC>

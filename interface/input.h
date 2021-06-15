@@ -35,44 +35,24 @@ signals:
             ,int     int_VISIBILITY_BUTTONS_INCREASE_BID
             ,QString str_PLAYR_NAME
             ,QString str_STAVKA
-            ,QString str_TIME_STEP
+            ,QString str_text_status_STAVKA // str_text_status_STAVKA
             ,QString str_ID_IMG_MARKER_1
             ,QString str_ID_IMG_MARKER_2
             ,QString floatStavka
             );
-        /*
-            ТЕКСТ_ИМЯ_ИГРОКА
-            ТЕКСТ_СТАВКА_ИГРОКА
-            ТЕКСТ_ВРЕМЯ_ХОДА
-            ИД_КАРТИНКИ_МАРКЕР1 BB
-            ИД_КАРТИНКИ_МАРКЕР2 ВТРОЙ
-            ВИДИМОСТЬ_КНОПКИ_СБРОС_КАРТ
-            ВИДИМОСТЬ_КНОПКИ_ПОВЫСИТЬ_СТАВКУ
-        */
-
-
 
     void setIndicatorFirstPlayerCard (QString str);
     void setIndicatorSecondPlayerCard (QString str);
 
-
-
-
 public slots:
 
-
     void ucazatbPositiyiStart();
-
     void ucazatbPositiyiStop();
-
     void receiveFromQml(QString ButtonCode);
     void clearPlayingCards();
     void confirm();
-
     void renderSelfCard();
-
     void selectedIndex(int index);
-
     void setPositions(int Index);
 
     // Перед тем как начинается игра за стол садятся игроки их может быть до 6. этот метод говорит что конкретный i игрок проинициализирован (присутствует)

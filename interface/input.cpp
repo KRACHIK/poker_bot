@@ -12,13 +12,30 @@ void CInput::ucazatbPositiyiStart()  {
              << "Кликни мышью на человека, которому присвоен маркер D";
 }
 
-void CInput::ucazatbPositiyiStop()  {
+
+class CGamePosition{
+public:
+    std::string d;
+};
+
+
+std::vector <CGamePosition> glPos= {
+     CGamePosition{"res/BU.PNG"}
+    ,CGamePosition{"res/SB.PNG"}
+    ,CGamePosition{"res/BB.PNG"}
+    ,CGamePosition{"res/EP.PNG"}
+    ,CGamePosition{"res/MP.PNG"}
+    ,CGamePosition{"res/CO.PNG"}
+};
+
+void CInput::ucazatbPositiyiStop()
+{ // TODO MOVE
+
     qDebug() << "[" << __FUNCTION__ << "] : m_SelectedIndex=" <<  m_SelectedIndex
              << "я подтверждаю что человек с индексом "
              << "m_SelectedIndex=" <<  m_SelectedIndex
              << "вледеет маркером D";
 
-    SingletonApplication::GetInstance().GetOtherPlayer(); // kr4
 
 
     int NewIndex_1 = (m_SelectedIndex + 1) % 6;
@@ -27,7 +44,27 @@ void CInput::ucazatbPositiyiStop()  {
     qDebug() << "[" << __FUNCTION__ << "] : новпя позиция для ставки 1.0 =" <<  NewIndex_1;
     qDebug() << "[" << __FUNCTION__ << "] : новпя Следующая позиция для ставки 0.5=" <<  NewIndex_2;
 
+    SingletonApplication::GetInstance().GetOtherPlayer(NewIndex_1).upStavka("0.5");
+    SingletonApplication::GetInstance().GetOtherPlayer(NewIndex_2).upStavka("1.0");
 
+
+    int gamePoleSize = SingletonApplication::GetInstance().GetOtherPlayer().size(); // = 6
+
+    for ( int i =0, k=0; i < gamePoleSize ; i++ )
+    {
+
+        int NewPosition = (m_SelectedIndex + i) % gamePoleSize ;
+
+        CActor & pActor = SingletonApplication::GetInstance().GetOtherPlayer(NewPosition);
+
+
+        pActor.SetStrPointerToPosition(glPos[i].d.c_str());
+
+
+        // ?
+    }
+
+    showTable();
     /*
 
                 5  <----
@@ -340,8 +377,6 @@ void CInput::selectedIndex(int index)
 {
     qDebug() << "[" << __FUNCTION__ << "] : " << index;
     m_SelectedIndex  = index;
-
-    //showTable();
 }
 
 void CInput::setPositions(int Index)
@@ -381,18 +416,20 @@ void CInput::showTable()
         QString str_STAVKA                                   = "STAVKA: " + QString ( std::to_string(it.GetStavka()).c_str() ) ;
         float floatStavka                                    = it.GetStavka();
 
-        QString str_TIME_STEP                                = "Not init";
+        QString str_text_status_STAVKA                                = "Not init";
         if (it.isEventClearPlayingCardsForOtherPlayer())
         {
-            str_TIME_STEP = "PLAYER CARDS: FOOLD" ;
+            str_text_status_STAVKA = "PLAYER CARDS: FOOLD" ;
         }
         else
         {
-            str_TIME_STEP = "Карты держит на руках";
+            str_text_status_STAVKA = "Карты держит на руках";
         }
 
-        QString str_ID_IMG_MARKER_1                          = "CPP_Not_INIT"  ;
-        QString str_ID_IMG_MARKER_2                          = "CPP_Not_INIT" ;
+        QString str_ID_IMG_MARKER_1 = "CPP_Not_INIT"  ;
+        QString str_ID_IMG_MARKER_2 =  it.GetStrPointerToPosition(); // TODO rename png
+
+
 
         emit  addLinesToTable(
                     int_INDEX
@@ -400,7 +437,7 @@ void CInput::showTable()
                     ,int_VISIBILITY_BUTTONS_INCREASE_BID
                     ,str_PLAYR_NAME
                     ,str_STAVKA
-                    ,str_TIME_STEP
+                    ,str_text_status_STAVKA
                     ,str_ID_IMG_MARKER_1
                     ,str_ID_IMG_MARKER_2
                     , "1" //std::to_string( floatStavka ).c_str()

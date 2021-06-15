@@ -913,10 +913,10 @@ Window {
             }
         }
 
-        Button {
-            text: "Палка указалка(на позицию) Часть 1"
-            onClicked: { FormUserInput.ucazatbPositiyiStart() }
-        }
+        //Button {
+        //    text: "Палка указалка(на позицию) Часть 1"
+        //    onClicked: { FormUserInput.ucazatbPositiyiStart() }
+        //}
 
         Button {
             text: "Палка указалка(на позицию) Часть 2"

@@ -66,30 +66,21 @@ Window
         }
 
 
-        onAddLinesToTable://  QString  str_PLAYR_NAME
-                        // ,QString str_STAVKA
-                        // ,QString str_TIME_STEP
-                        // ,QString str_ID_IMG_MARKER_1
-                        // ,QString str_ID_IMG_MARKER_2
-                        // ,int     int_INDEX
-                        // ,int     int_VISIBILITY_PUSHBUTTON_SBROW_MAPS
-                        // ,int     int_VISIBILITY_BUTTONS_INCREASE_BID
-                        // ,float floatStavka
+        onAddLinesToTable:
         {
             listModelCircle.append( {
-                                 m_INDEX : int_INDEX
-                                ,m_VISIBILITY_PUSHBUTTON_SBROW_MAPS : int_VISIBILITY_PUSHBUTTON_SBROW_MAPS
-                                ,m_VISIBILITY_BUTTONS_INCREASE_BID : int_VISIBILITY_BUTTONS_INCREASE_BID
-                                ,m_PLAYR_NAME : str_PLAYR_NAME
-                                ,m_STAVKA : str_STAVKA
-                                ,m_TIME_STEP : str_TIME_STEP
-                                ,m_ID_IMG_MARKER_1 : str_ID_IMG_MARKER_1
-                                ,m_ID_IMG_MARKER_2 : str_ID_IMG_MARKER_2
-                                ,m_floatStavka : floatStavka
-                                })
+                 m_INDEX : int_INDEX
+                ,m_VISIBILITY_PUSHBUTTON_SBROW_MAPS : int_VISIBILITY_PUSHBUTTON_SBROW_MAPS
+                ,m_VISIBILITY_BUTTONS_INCREASE_BID : int_VISIBILITY_BUTTONS_INCREASE_BID
+                ,m_PLAYR_NAME : str_PLAYR_NAME
+                ,m_STAVKA : str_STAVKA
+                ,m_TIME_STEP : str_text_status_STAVKA
+                ,m_ID_IMG_MARKER_1 : str_ID_IMG_MARKER_1
+                ,m_ID_IMG_MARKER_2 : str_ID_IMG_MARKER_2
+                ,m_floatStavka : floatStavka
+                })
 
-
-        }
+        } // onAddLinesToTable
     }
 
 
@@ -177,7 +168,7 @@ Window
                     m_STAVKA          : "2.99$"
                     m_TIME_STEP       : "7Sec"
                     m_ID_IMG_MARKER_1 : "BB"
-                    m_ID_IMG_MARKER_2 : "Wood"
+                    m_ID_IMG_MARKER_2 : "Wood" // <- str_text_status_STAVKA
                     m_floatStavka     : "1"
                 }
 
@@ -241,7 +232,7 @@ Window
             }
 
             /// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-               delegate:
+             delegate:
             /// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             RadioDelegate
             {
@@ -258,6 +249,25 @@ Window
                 y: 8
                 width:   170
                 height:  text_subjecttext_subject.y - text_typetext_type.y +  text_subjecttext_subject.height + 19
+
+
+                Rectangle{
+                    x: 124
+                    y: 74
+                    width:  46
+                    height: 44
+                    border.color: "black"
+
+                    Layout.minimumHeight: 40
+                    Layout.minimumWidth: 1
+                    Image {
+
+                        width:  46
+                        height: 44
+                        //id: immage_position
+                        source: m_ID_IMG_MARKER_2
+                    }
+                }
 
                 background: Rectangle
                 {
@@ -388,7 +398,7 @@ Window
                         text: m_ID_IMG_MARKER_1
                     }
                     Text {
-                        visible: true; x: 23;  y: 157; color: "red"
+                        visible: true; x: 23;  y: 157; color: "blue"
                         text: m_ID_IMG_MARKER_2
                     }
                     Text {
