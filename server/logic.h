@@ -9,6 +9,7 @@
 
 #include "base/base.h"
 #include "table_utg_sh.h"
+#include "tablecards.h"
 #include "top_20_starting_hands.h"
 
 #include <vector>
@@ -38,8 +39,29 @@ public:
 private:
     CActor m_Actor;
     CTableTop20StartingHands m_TableTop20StartingHands;
-    CTable_UTG_SH           m_Table_UTG_SH;
-    std::vector<CActor>     m_OtherPlayers;
+    CTable_UTG_SH            m_Table_UTG_SH;
+    CTable_BB_ISO            m_Table_BB_ISO;
+    CTable_start             m_Table_start;
+    CTable_MP                m_Table_MP;
+    CTable_CO                m_Table_CO;
+    CTable_BU_OPEN           m_Table_BU_OPEN;
+    CTable_SB_OPEN           m_Table_SB_OPEN;
+    CTable_vs_3b_UTG_FR      m_Table_vs_3b_UTG_FR;
+    CTables_vs_3b_MP         m_Tables_vs_3b_MP;
+    CTables_vs_3b_SB         m_Tables_vs_3b_SB;
+    CTables_vs_UTG_FR        m_Tables_vs_UTG_FR;
+    CTables_vs_UTG           m_Tables_vs_UTG;
+    CTables_vs_MP            m_Tables_vs_MP;
+    CTables_vs_CO            m_Tables_vs_CO;
+    CTables_SB_vs_UTGFR      m_Tables_SB_vs_UTGFR;
+    CTables_SB_vs_UTG17      m_Tables_SB_vs_UTG17;
+    CTables_SB_vs_MP20       m_Tables_SB_vs_MP20;
+    CTables_SB_vs_CO27       m_Tables_SB_vs_CO27;
+    CTables_SB_vs_BU45       m_Tables_SB_vs_BU45;
+    CTables_vs4B_UTGFR       m_Tables_vs4B_UTGFR;
+    CTables_vs4B_UTG         m_Tables_vs4B_UTG;
+
+    std::vector<CActor>      m_OtherPlayers;
 };
 
 
@@ -47,6 +69,7 @@ class CFindPlayingCards
 {
 public:
 static bool GetStatus(std::vector<std::vector <CTexasHoldem>> Tables, CActor &Actor);
+static bool GetStatus(std::vector <CTexasHoldem> Tables, CActor &Actor);
 };
 
 
