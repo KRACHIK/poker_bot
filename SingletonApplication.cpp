@@ -48,6 +48,11 @@ void SingletonApplication::InsertNewPlayer(int Index, QString Name)
 
 }
 
+CContainerPosition SingletonApplication::ContainerPosition() const
+{
+    return m_ContainerPosition;
+}
+
 std::vector<CActor> SingletonApplication::GetOtherPlayer()
 {
     return m_OtherPlayers;

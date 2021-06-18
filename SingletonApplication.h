@@ -41,10 +41,13 @@ public:
 
     void InsertNewPlayer(int Index, QString Name);
 
+    CContainerPosition ContainerPosition() const;
+
 private:
     CActor m_Actor; // Это модель которая иметирует нас
     CInput * m_pUserInputForm;
     std::vector<CActor> m_OtherPlayers; // Это модель которая иметирует наших соперников
+    CContainerPosition m_ContainerPosition;
 };
 
 

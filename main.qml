@@ -919,8 +919,13 @@ Window {
         //}
 
         Button {
-            text: "Палка указалка(на позицию) Часть 2"
+            text: "Палка указалка(на позицию) Часть 1"
             onClicked: { FormUserInput.ucazatbPositiyiStop() }
+        }
+
+        Button {
+            text: "Палка указалка(на СВОЮ позицию) Часть 2"
+               onClicked: { FormUserInput.ucazatbPositiySELF() }
         }
     }
 
@@ -1009,6 +1014,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0;formeditorZoom:1.25}
+    D{i:0;formeditorZoom:1.100000023841858}
 }
 ##^##*/

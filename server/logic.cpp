@@ -16,6 +16,7 @@ void SingletonServerLogic::Tick()
 
         CServerLogicAnswerData ServerLogicAnswerData;
 
+#if 0
         //bool bFindTop20 = m_TableTop20StartingHands.GetStatus(m_Actor);
         //qDebug() << "[" << __FUNCTION__ << "] : Поиск в таблице Top20 используя старый алго bFindTop20 =" << bFindTop20;
 
@@ -24,14 +25,14 @@ void SingletonServerLogic::Tick()
         qDebug() << "[" << __FUNCTION__ << "] : Поиск в таблице Top20 используя обобщеный механизм bFindTop20_v2 =" << bFindTop20_v2;
 
 
-        bool bUTG_SH = CFindPlayingCards::GetStatus(m_Table_UTG_SH.GetTable() , m_Actor);
-        ServerLogicAnswerData.SetStatusTable_UTG_SH(bUTG_SH);
-        qDebug() << "[" << __FUNCTION__ << "] : Поиск в таблице m_Table_UTG_SH используя обобщеный механизм bUTG_SH =" << bUTG_SH;
-
-        if (  bUTG_SH == false)
-        {
-            ServerLogicAnswerData.SetActionFOLD_For_TAB_UTG_SH(true);
-        }
+        //bool bUTG_SH = CFindPlayingCards::GetStatus(m_Table_UTG_SH.GetTable() , m_Actor);
+        //ServerLogicAnswerData.SetStatusTable_UTG_SH(bUTG_SH);
+        //qDebug() << "[" << __FUNCTION__ << "] : Поиск в таблице m_Table_UTG_SH используя обобщеный механизм bUTG_SH =" << bUTG_SH;
+        //
+        //if (  bUTG_SH == false)
+        //{
+        //    ServerLogicAnswerData.SetActionFOLD_For_TAB_UTG_SH(true);
+        //}
 
 
 
@@ -194,6 +195,19 @@ void SingletonServerLogic::Tick()
             qDebug() << "[" << __FUNCTION__ << "] : найдено в m_Tables_vs4B_UTG =" ;
         }else{
             qDebug() << "[" << __FUNCTION__ << "] : НЕ найдено в m_Tables_vs4B_UTG =" ;
+        }
+
+#endif
+
+
+        std::shared_ptr<ITable> pTable = CTableManager::GetTableByName(m_Actor.GetStrPointerToPosition().toStdString());
+        qDebug() << "[" << __FUNCTION__ << "] : ПОЛУЧЕН ПОЛИМОРФНЫЙ ОБЪЕКТ: " << pTable->GetTableName().c_str() ;
+
+        if (CFindPlayingCards::GetStatus( pTable->Operation(), m_Actor))
+        {
+            qDebug() << "[" << __FUNCTION__ << "] : найдено в ПОЛИМОРФНОМ ОБЪЕКТЕ";
+        }else{
+            qDebug() << "[" << __FUNCTION__ << "] : НЕ в ПОЛИМОРФНОМ ОБЪЕКТЕ";
         }
 
 

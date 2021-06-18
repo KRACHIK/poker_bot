@@ -125,3 +125,19 @@ std::vector<CTexasHoldem> CTables_vs4B_UTG::Tables() const
 {
     return m_Tables;
 }
+
+std::vector<CTexasHoldem> CTables_vs_4b_BB_vs_MP::Tables() const
+{
+    return m_Tables;
+}
+
+
+std::vector<CTexasHoldem> CTables_4b_BB_vsCO::Tables() const
+{
+    return m_Tables;
+}
+
+std::vector<CTexasHoldem> CTables_vs_4B_BB_vs_BU::Tables() const
+{
+    return m_Tables;
+}

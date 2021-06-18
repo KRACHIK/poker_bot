@@ -39,7 +39,7 @@ public:
 private:
     CActor m_Actor;
     CTableTop20StartingHands m_TableTop20StartingHands;
-    CTable_UTG_SH            m_Table_UTG_SH;
+    //CTable_UTG_SH            m_Table_UTG_SH;
     CTable_BB_ISO            m_Table_BB_ISO;
     CTable_start             m_Table_start;
     CTable_MP                m_Table_MP;

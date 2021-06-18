@@ -282,4 +282,24 @@ private:
     EStatus m_bUTG_SH = EStatus::NONE;
 };
 
+class CGamePosition{
+public:
+    std::string d;
+};
+
+
+class CContainerPosition{
+
+public:
+    std::vector <CGamePosition> m_Pos= {
+         CGamePosition{"res/BU.PNG"}
+        ,CGamePosition{"res/SB.PNG"}
+        ,CGamePosition{"res/BB.PNG"}
+        ,CGamePosition{"res/EP.PNG"}
+        ,CGamePosition{"res/MP.PNG"}
+        ,CGamePosition{"res/CO.PNG"}
+    };
+};
+
+
 #endif // BASE_H

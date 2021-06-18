@@ -7,26 +7,24 @@ CInput::CInput(QObject* parent) : QObject(parent)
 {
 }
 
+void CInput::ucazatbPositiySELF()
+{
+
+    qDebug() << "[" << __FUNCTION__ << "] : m_SelectedIndex=" <<  m_SelectedIndex
+             << "я подтверждаю что ВЛАДЕЮ МАРКЕРОМ с индексом "
+             << "m_SelectedIndex=" <<  m_SelectedIndex;
+
+    QString StrPointerToPosition =  SingletonApplication::GetInstance().GetOtherPlayer(m_SelectedIndex ).GetStrPointerToPosition();
+
+    SingletonApplication::GetInstance().GetPlayerActor().SetStrPointerToPosition(StrPointerToPosition );
+}
+
 void CInput::ucazatbPositiyiStart()  {
     qDebug() << "[" << __FUNCTION__ << "] : m_SelectedIndex=" <<  m_SelectedIndex
              << "Кликни мышью на человека, которому присвоен маркер D";
 }
 
 
-class CGamePosition{
-public:
-    std::string d;
-};
-
-
-std::vector <CGamePosition> glPos= {
-     CGamePosition{"res/BU.PNG"}
-    ,CGamePosition{"res/SB.PNG"}
-    ,CGamePosition{"res/BB.PNG"}
-    ,CGamePosition{"res/EP.PNG"}
-    ,CGamePosition{"res/MP.PNG"}
-    ,CGamePosition{"res/CO.PNG"}
-};
 
 void CInput::ucazatbPositiyiStop()
 { // TODO MOVE
@@ -57,8 +55,7 @@ void CInput::ucazatbPositiyiStop()
 
         CActor & pActor = SingletonApplication::GetInstance().GetOtherPlayer(NewPosition);
 
-
-        pActor.SetStrPointerToPosition(glPos[i].d.c_str());
+        pActor.SetStrPointerToPosition(SingletonApplication::GetInstance().ContainerPosition().m_Pos[i].d.c_str());
 
 
         // ?

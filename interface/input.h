@@ -45,7 +45,7 @@ signals:
     void setIndicatorSecondPlayerCard (QString str);
 
 public slots:
-
+    void ucazatbPositiySELF();
     void ucazatbPositiyiStart();
     void ucazatbPositiyiStop();
     void receiveFromQml(QString ButtonCode);
