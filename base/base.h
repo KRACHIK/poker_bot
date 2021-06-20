@@ -306,5 +306,10 @@ public:
     };
 };
 
+class CSetting{
+public:
+    std::string  m_ValueStavkaUpAAfterFindPlayerCardInTable = "2.5"; //(QString stavkaUpValue)
+};
+
 
 #endif // BASE_H

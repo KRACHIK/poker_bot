@@ -67,6 +67,8 @@ public slots:
     void clearPlayingCardsForThisPlayer(int index);
     void upStavkaForThisPlayer(int index, QString StavkaValue);
 
+    /* После того как мы ввели наши карты, сервер попытается найти их в одной из своих таблиц, и если он их найдейт, то ставка будет увеличена на значение stavkaUpValue. по умолчанию 2.5*/
+    void setValueStavkaUpAAfterFindPlayerCardInTable ( QString  stavkaUpValue );
 private:
     int m_counter {0};
     int m_SelectedIndex = 0;

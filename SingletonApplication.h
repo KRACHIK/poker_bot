@@ -47,12 +47,14 @@ public:
 
     CActor *GetPtrActor() const;
     void SetPtrActor(CActor *PtrActor);
+    CSetting & GetPtrSetting();
 
 private:
     CActor * m_PtrActor = nullptr; // Это модель которая иметирует нас
     CInput * m_pUserInputForm;
     std::vector<CActor> m_OtherPlayers; // Это модель которая иметирует наших соперников
     CContainerPosition m_ContainerPosition;
+    CSetting m_Setting;
 };
 
 

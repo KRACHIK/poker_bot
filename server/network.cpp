@@ -69,7 +69,8 @@ bool CServerNetwork::ServerSay( CServerLogicAnswerData  ServerLogicAnswerData)
     {
         qDebug() << "[" << __FUNCTION__ << "] : ПОДНЯТЬ СТАВКУ";
 
-        SingletonApplication::GetInstance().GetPtrActor()->upStavka("2.5");   // Todo move in server
+        std::string ValueStavkaUpAAfterFindPlayerCardInTable =  SingletonApplication::GetInstance().GetPtrSetting().m_ValueStavkaUpAAfterFindPlayerCardInTable;
+        SingletonApplication::GetInstance().GetPtrActor()->upStavka( ValueStavkaUpAAfterFindPlayerCardInTable.c_str() );   // Todo move in server
         SingletonApplication::GetInstance().GetPtrUserInputForm()->showTable(); // Todo move in server
     }
 

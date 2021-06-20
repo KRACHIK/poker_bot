@@ -468,3 +468,8 @@ void CInput::upStavkaForThisPlayer(int index, QString stavkaValueStr)
 
     SingletonApplication::GetInstance().Send();
 }
+
+void CInput::setValueStavkaUpAAfterFindPlayerCardInTable(QString stavkaUpValue)
+{
+    SingletonApplication::GetInstance().GetPtrSetting().m_ValueStavkaUpAAfterFindPlayerCardInTable = stavkaUpValue.toStdString();
+}

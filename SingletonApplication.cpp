@@ -64,6 +64,11 @@ void SingletonApplication::SetPtrActor(CActor *PtrActor)
     m_PtrActor = PtrActor;
 }
 
+CSetting & SingletonApplication::GetPtrSetting()
+{
+    return m_Setting;
+}
+
 std::vector<CActor> SingletonApplication::GetOtherPlayer()
 {
     return m_OtherPlayers;
