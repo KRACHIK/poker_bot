@@ -237,3 +237,13 @@ void CServerLogicAnswerData::SetActionFOLD_For_TAB_UTG_SH(bool bActionFOLD_For_T
 {
     m_bActionFOLD_For_TAB_UTG_SH = bActionFOLD_For_TAB_UTG_SH;
 }
+
+bool CServerLogicAnswerData::IsAction_FOLD() const
+{
+    return m_bAction_FOLD;
+}
+
+void CServerLogicAnswerData::SetAction_FOLD(bool bAction_FOLD)
+{
+    m_bAction_FOLD = bAction_FOLD;
+}

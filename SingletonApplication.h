@@ -27,7 +27,9 @@ public:
     static SingletonApplication& GetInstance();
     void Send();
     void Clear();
-    CActor &GetPlayerActor();
+
+     //CActor &GetPlayerActor();
+
     void SetUserInputForm(CInput *pUserInputForm);
     CInput *GetPtrUserInputForm() const;
     std::vector<CActor> GetOtherPlayer();
@@ -43,8 +45,11 @@ public:
 
     CContainerPosition ContainerPosition() const;
 
+    CActor *GetPtrActor() const;
+    void SetPtrActor(CActor *PtrActor);
+
 private:
-    CActor m_Actor; // Это модель которая иметирует нас
+    CActor * m_PtrActor = nullptr; // Это модель которая иметирует нас
     CInput * m_pUserInputForm;
     std::vector<CActor> m_OtherPlayers; // Это модель которая иметирует наших соперников
     CContainerPosition m_ContainerPosition;

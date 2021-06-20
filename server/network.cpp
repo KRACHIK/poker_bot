@@ -54,11 +54,25 @@ bool CServerNetwork::ServerSay( CServerLogicAnswerData  ServerLogicAnswerData)
     emit SingletonApplication::GetInstance().GetPtrUserInputForm()->setText_top20( MsgTop20);
     emit SingletonApplication::GetInstance().GetPtrUserInputForm()->setText_UTG_SH(MsgUTG_SH);
     \
-    if (ServerLogicAnswerData.IsActionFOLD_For_TAB_UTG_SH())
+    //if (ServerLogicAnswerData.IsActionFOLD_For_TAB_UTG_SH())
+    //{
+    //    qDebug() << "[" << __FUNCTION__ << "] : DESIGN MAKER FOLD";
+    //    emit SingletonApplication::GetInstance().GetPtrUserInputForm()->serverCmd_Fold();
+    //}
+
+    if (ServerLogicAnswerData.IsAction_FOLD())
     {
         qDebug() << "[" << __FUNCTION__ << "] : DESIGN MAKER FOLD";
         emit SingletonApplication::GetInstance().GetPtrUserInputForm()->serverCmd_Fold();
     }
+    else
+    {
+        qDebug() << "[" << __FUNCTION__ << "] : ПОДНЯТЬ СТАВКУ";
+
+        SingletonApplication::GetInstance().GetPtrActor()->upStavka("2.5");   // Todo move in server
+        SingletonApplication::GetInstance().GetPtrUserInputForm()->showTable(); // Todo move in server
+    }
+
 
     return false;
 }
@@ -80,14 +94,14 @@ bool CServerNetwork::ServerSayInitStol(std::string Msg)
 
     emit SingletonApplication::GetInstance().GetPtrUserInputForm()->eventInitStol();
     SingletonApplication::GetInstance().GetPtrUserInputForm()->showTable();
-    SingletonApplication::GetInstance().GetPtrUserInputForm()->renderSelfCard();
+    //SingletonApplication::GetInstance().GetPtrUserInputForm()->renderSelfCard();
     return true;
 }
 
 void CServerNetwork::ClientSay(CActor Actor)
 {
-    qDebug() << "[" << __FUNCTION__ << "] : ";
-
+    //qDebug() << "[" << __FUNCTION__ << "] : ";
+    //
     SingletonServerLogic::GetInstance().SetPlayerActor(Actor);
     SingletonServerLogic::GetInstance().Tick();
 }

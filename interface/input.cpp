@@ -14,9 +14,12 @@ void CInput::ucazatbPositiySELF()
              << "я подтверждаю что ВЛАДЕЮ МАРКЕРОМ с индексом "
              << "m_SelectedIndex=" <<  m_SelectedIndex;
 
-    QString StrPointerToPosition =  SingletonApplication::GetInstance().GetOtherPlayer(m_SelectedIndex ).GetStrPointerToPosition();
+    QString StrPointerToPosition =  SingletonApplication::GetInstance().GetOtherPlayer(m_SelectedIndex).GetStrPointerToPosition();
 
-    SingletonApplication::GetInstance().GetPlayerActor().SetStrPointerToPosition(StrPointerToPosition );
+
+    CActor *pActor =  &SingletonApplication::GetInstance().GetOtherPlayer(m_SelectedIndex);
+    SingletonApplication::GetInstance().SetPtrActor(pActor);
+    SingletonApplication::GetInstance().GetPtrActor()->SetStrPointerToPosition(StrPointerToPosition );
 }
 
 void CInput::ucazatbPositiyiStart()  {
@@ -322,7 +325,7 @@ void CInput::receiveFromQml(QString ButtonCode)
 
 
 
-        SingletonApplication::GetInstance().GetPlayerActor().PushBack(PlayingCard);
+        SingletonApplication::GetInstance().GetPtrActor()->PushBack(PlayingCard);
     }
 
 
@@ -349,7 +352,7 @@ void CInput::renderSelfCard()
 {
     qDebug() << "[" << __FUNCTION__ << "] : ";
 
-    std::vector<CPlayingCard> PlayingCard = SingletonApplication::GetInstance().GetPlayerActor().GetPlayingCards();
+    std::vector<CPlayingCard> PlayingCard = SingletonApplication::GetInstance().GetPtrActor()->GetPlayingCards();
 
     if (PlayingCard.size() == 1)
     {

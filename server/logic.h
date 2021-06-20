@@ -31,7 +31,7 @@ public:
 
     void Tick();
 
-    CActor & GetPlayerActor();
+    //CActor & GetPlayerActor();
 
     void SetPlayerActor(CActor Actor);
     void SetOtherPlayer(std::vector<CActor> OtherPlayers);

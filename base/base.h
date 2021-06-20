@@ -272,14 +272,19 @@ public:
     EStatus GetStatusTop20() const;
     EStatus GetStatusUTG_SH() const;
 
-    bool m_bActionFOLD_For_TAB_UTG_SH = false;
 
     bool IsActionFOLD_For_TAB_UTG_SH() const;
     void SetActionFOLD_For_TAB_UTG_SH(bool bActionFOLD_For_TAB_UTG_SH);
 
+    bool IsAction_FOLD() const;
+    void SetAction_FOLD(bool bAction_FOLD);
+
 private:
     EStatus m_Top20 = EStatus::NONE;
     EStatus m_bUTG_SH = EStatus::NONE;
+    bool m_bActionFOLD_For_TAB_UTG_SH = false;
+    bool m_bAction_FOLD = false;
+
 };
 
 class CGamePosition{

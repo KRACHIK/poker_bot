@@ -203,14 +203,17 @@ void SingletonServerLogic::Tick()
         std::shared_ptr<ITable> pTable = CTableManager::GetTableByName(m_Actor.GetStrPointerToPosition().toStdString());
         qDebug() << "[" << __FUNCTION__ << "] : ПОЛУЧЕН ПОЛИМОРФНЫЙ ОБЪЕКТ: " << pTable->GetTableName().c_str() ;
 
-        if (CFindPlayingCards::GetStatus( pTable->Operation(), m_Actor))
+        bool bFind = CFindPlayingCards::GetStatus( pTable->Operation(), m_Actor);
+        if (bFind)
         {
             qDebug() << "[" << __FUNCTION__ << "] : найдено в ПОЛИМОРФНОМ ОБЪЕКТЕ";
-        }else{
-            qDebug() << "[" << __FUNCTION__ << "] : НЕ в ПОЛИМОРФНОМ ОБЪЕКТЕ";
+            ServerLogicAnswerData.SetAction_FOLD (false);
         }
-
-
+        else
+        {
+            qDebug() << "[" << __FUNCTION__ << "] : НЕ в ПОЛИМОРФНОМ ОБЪЕКТЕ";
+            ServerLogicAnswerData.SetAction_FOLD (true);
+        }
 
         qDebug() << "[" << __FUNCTION__ << "] : Error!";
         CServerNetwork networkObj;
@@ -226,10 +229,10 @@ void SingletonServerLogic::Tick()
 
 }
 
-CActor &SingletonServerLogic::GetPlayerActor()
-{
-    return m_Actor;
-}
+// kr4 CActor &SingletonServerLogic::GetPlayerActor()
+// kr4 {
+// kr4     return m_Actor;
+// kr4 }
 
 void SingletonServerLogic::SetPlayerActor(CActor Actor)
 {

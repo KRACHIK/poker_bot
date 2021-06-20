@@ -15,13 +15,14 @@ void SingletonApplication::Send()
     qDebug() << "[" << __FUNCTION__ << "] : ";
 
     CServerNetwork  networkObj;
-    networkObj.ClientSay(m_Actor);
     networkObj.ClientSay(m_OtherPlayers);
-}
 
-CActor &SingletonApplication::GetPlayerActor()
-{
-    return m_Actor;
+    if (m_PtrActor != nullptr)
+    {
+        CActor tmp = *m_PtrActor;
+         networkObj.ClientSay(tmp );
+    }
+
 }
 
 void SingletonApplication::SetUserInputForm(CInput *pUserInputForm)
@@ -53,6 +54,16 @@ CContainerPosition SingletonApplication::ContainerPosition() const
     return m_ContainerPosition;
 }
 
+CActor *SingletonApplication::GetPtrActor() const
+{
+    return m_PtrActor;
+}
+
+void SingletonApplication::SetPtrActor(CActor *PtrActor)
+{
+    m_PtrActor = PtrActor;
+}
+
 std::vector<CActor> SingletonApplication::GetOtherPlayer()
 {
     return m_OtherPlayers;
@@ -61,5 +72,5 @@ std::vector<CActor> SingletonApplication::GetOtherPlayer()
 
 void SingletonApplication::Clear()
 {
-    GetPlayerActor().ClearPlayingCards();
+    GetPtrActor()->ClearPlayingCards();
 }
