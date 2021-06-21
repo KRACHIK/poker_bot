@@ -63,6 +63,8 @@ public slots:
     void dbg();
     void showTable();
     void updateGUI();
+void clearStavkaForAllPlayer();
+    void endGame();
 
     void clearPlayingCardsForThisPlayer(int index);
     void upStavkaForThisPlayer(int index, QString StavkaValue);

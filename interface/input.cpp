@@ -453,6 +453,28 @@ void CInput::updateGUI()
     showTable();
 }
 
+void CInput::clearStavkaForAllPlayer(){
+    qDebug() << "[" << __FUNCTION__ << "] : m_SelectedIndex=" <<  m_SelectedIndex;
+
+    int gamePoleSize = SingletonApplication::GetInstance().GetOtherPlayer().size(); // = 6
+
+    for ( int i =0, k=0; i < gamePoleSize ; i++ )
+    {
+        SingletonApplication::GetInstance().GetOtherPlayer(i).SetFStavka(0.0);
+    }
+
+    showTable();
+}
+
+void CInput::endGame()
+{
+    qDebug() << "[" << __FUNCTION__ << "] : " ;
+
+   ucazatbPositiyiStop();
+   clearStavkaForAllPlayer();
+   ucazatbPositiyiStop();
+}
+
 void CInput::clearPlayingCardsForThisPlayer(int index)
 {
     qDebug() << "[" << __FUNCTION__ << "] : " ;

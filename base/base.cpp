@@ -78,6 +78,11 @@ void CActor::SetStrPointerToPosition(const QString &value)
     str_PointerToPositio = value;
 }
 
+void CActor::SetFStavka(float fStavka)
+{
+    m_fStavka = fStavka;
+}
+
 CPlayingCard::CPlayingCard(ESuit Suit, ER Rank)
     : m_Number ( 0)
     , m_Text  ( "")

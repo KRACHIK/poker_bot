@@ -12,10 +12,12 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
+    QCoreApplication::setQuitLockEnabled(false);
+    //QApplication::setQuitOnLastWindowClosed(false);
+
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-
 
     //-----------------------------------------------------------------------------------------
     QQmlContext *context = engine.rootContext();

@@ -10,12 +10,17 @@ import QtQuick.Dialogs 1.1
 
 
 
-Window
+//  Window old
+ApplicationWindow
 {
     id: profile_manager
     signal signalExit
     property int number: 0
     property int button_text_pixel_size: 13
+
+   // modality: Qt.ApplicationHidden
+
+    title: qsTr("Игровой стол")
 
     visible: true
 

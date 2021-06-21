@@ -5,11 +5,16 @@ import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
 
 
-Window {
-    width: 1200
-    height: 480
+//Window { // old
+    ApplicationWindow {
+    width: 1200;  height: 480
+
+  //  modality: Qt.ApplicationHidden
+
+    modality: Qt.ApplicationModal
+
     visible: true
-    title: qsTr("Online: 837")
+    title: qsTr("main")
 
     RowLayout {
         x: 13
@@ -841,9 +846,7 @@ Window {
         id : formTablePlayers
     }
 
-    /* С помощью объекта Connections
-         * Устанавливаем соединение с объектом ядра приложения
-         * */
+
     Connections {
         target: FormUserInput // Указываем целевой объект для соединения
         /* Объявляем и реализуем функцию, как параметр
@@ -925,7 +928,12 @@ Window {
 
         Button {
             text: "Палка указалка(на СВОЮ позицию) Часть 2"
-               onClicked: { FormUserInput.ucazatbPositiySELF() }
+            onClicked: { FormUserInput.ucazatbPositiySELF() }
+        }
+
+        Button {
+            text: "Завершить игру"
+            onClicked: { FormUserInput.endGame() }
         }
     }
 

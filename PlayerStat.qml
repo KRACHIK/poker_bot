@@ -7,9 +7,12 @@ import QtQuick.Layouts 1.2
 
 ApplicationWindow {
     id: playerStat
-    width: 400
-    height: 480
-    visible: true
+
+    title: qsTr("Статистика")
+
+    width: 400;  height: 480; visible: true
+
+ ///   modality: Qt.ApplicationHidden
 
     Connections
     {

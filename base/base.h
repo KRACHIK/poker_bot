@@ -248,6 +248,8 @@ public:
    QString GetStrPointerToPosition() const;
    void SetStrPointerToPosition(const QString &value);
 
+   void SetFStavka(float fStavka);
+
 private:
    QString m_PlayerName = "";
    int m_PlayerIndex = 0;
@@ -256,6 +258,8 @@ private:
     bool m_bEventClearPlayingCardsForOtherPlayer = false;
     QString  str_PointerToPositio = "cpp_not_init";
        // BB SB..
+
+
 };
 
 
