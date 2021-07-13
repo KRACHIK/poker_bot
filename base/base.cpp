@@ -83,6 +83,16 @@ void CActor::SetFStavka(float fStavka)
     m_fStavka = fStavka;
 }
 
+std::string CActor::uniquePlayerID() const
+{
+    return m_uniquePlayerID;
+}
+
+void CActor::setUniquePlayerID(const std::string &uniquePlayerID)
+{
+    m_uniquePlayerID = uniquePlayerID;
+}
+
 CPlayingCard::CPlayingCard(ESuit Suit, ER Rank)
     : m_Number ( 0)
     , m_Text  ( "")
@@ -251,4 +261,37 @@ bool CServerLogicAnswerData::IsAction_FOLD() const
 void CServerLogicAnswerData::SetAction_FOLD(bool bAction_FOLD)
 {
     m_bAction_FOLD = bAction_FOLD;
+}
+
+std::string CCommonSteepByStepDBGLog::GetTextLog() const
+{
+    return m_sLog;
+}
+
+size_t CBase::GetIndexPlayerActor(std::vector<CActor> OtherActor, CActor Actor)
+{
+    if (Actor.uniquePlayerID().empty())
+    {
+        //"TODO error";
+assert(false);
+        return -1;
+    }
+
+    for (size_t i=0; i<OtherActor.size(); i++)
+    {
+        if (OtherActor[i].uniquePlayerID().empty())
+        {
+            // TODO not init
+            assert(false);
+            return -1;
+        }
+
+        if (OtherActor[i].uniquePlayerID() == Actor.uniquePlayerID())
+        {
+            return i;
+        }
+    }
+
+    assert(false);
+    return -1;
 }

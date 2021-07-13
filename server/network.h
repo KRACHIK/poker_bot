@@ -15,7 +15,10 @@ public:
     bool ServerSayInitStol(std::string Msg );
 
     void ClientSay( CActor  Actor );
-    void ClientSay( std::vector<CActor> OtherPlayers );
+
+
+    void ClientSay(std::vector<CActor> OtherPlayers);
+    void ClientSay( std::vector<CActor> OtherPlayers, ECOMMAND Cmd);
 
 };
 

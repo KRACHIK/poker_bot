@@ -105,8 +105,15 @@ ApplicationWindow {
         height: 18
         text: "Применить"
 
-         onClicked: FormUserInput.setValueStavkaUpAAfterFindPlayerCardInTable ( text_stavkaUpValue.text )
+        onClicked: FormUserInput.setValueStavkaUpAAfterFindPlayerCardInTable ( text_stavkaUpValue.text )
 
+    }
+
+    Button {
+        x: 18
+        y: 337
+
+        text: "пока не используется"
     }
 
 

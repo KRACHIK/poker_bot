@@ -9,8 +9,11 @@ CONFIG += c++11
 SOURCES += \
         SingletonApplication.cpp \
         base/base.cpp \
+        interface/form_cheat_server_action.cpp \
+        interface/form_default_player_action.cpp \
         interface/input.cpp \
         main.cpp \
+        network/adapter.cpp \
         server/logic.cpp \
         server/network.cpp \
         server/table_utg_sh.cpp \
@@ -33,7 +36,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     SingletonApplication.h \
     base/base.h \
+    interface/form_cheat_server_action.h \
+    interface/form_default_player_action.h \
     interface/input.h \
+    network/adapter.h \
     server/logic.h \
     server/network.h \
     server/table_utg_sh.h \

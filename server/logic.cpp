@@ -245,6 +245,66 @@ void SingletonServerLogic::SetOtherPlayer(std::vector<CActor> OtherPlayers)
     m_OtherPlayers = OtherPlayers;
 }
 
+void SingletonServerLogic::Execut(ECOMMAND Cmd)
+{
+    qDebug() << "[" << __FUNCTION__ << "] :   ";
+
+    qDebug() << "[" << __FUNCTION__ << "] :  Получить указатель на игрока который сделал ход передомной";
+    qDebug() << "[" << __FUNCTION__ << "] :  и если он повысел ставку то";
+    qDebug() << "[" << __FUNCTION__ << "] :  и если он сбросил ставку то";
+
+
+    auto GetPlayerCotoriySdelalHodPeredomnoy = [] (std::vector<CActor> OtherPlayers, size_t SelfIndex
+            , CActor & OutputActor)
+            -> bool
+    {
+        /*
+         *  GetPlayerCotoriySdelalHodPeredomnoy
+         *  ожидается что сервер ожидает что мы сделаем ход. на выбор
+         * повысить ставку либо избавиться от своих карт
+         * этот выбор мы делаем из ходя из следующего алгоритма
+         * если перед нами каждый другой игрок сбросил карты то мы ищем свои карты в определеной таблице
+         * если хотябы один игрок повысел ставку, то мы ищем карты в другой определной позиции
+         * если хотябы несколько других игроков повысело ставку, но мы опредделяем сельнейшего из них
+         * и ищем свои карты в дргой определеной таблице
+        */
+
+        if (OtherPlayers.size() <= 1)
+        {
+            // TOdo Error
+            return false;
+        }
+
+        if ( SelfIndex != -1 &&  SelfIndex < OtherPlayers.size())
+        {
+            OutputActor = OtherPlayers[SelfIndex -1];
+        }
+        else if (SelfIndex == 0)
+        {
+            OutputActor = OtherPlayers[ OtherPlayers.size() -1];
+        }
+        return true;
+    };
+
+
+    size_t SelfIndex = CBase::GetIndexPlayerActor( m_OtherPlayers, m_Actor);
+
+    if (SelfIndex != -1 )
+    {
+        CActor PeredomnoyActor;
+
+        bool bOk = GetPlayerCotoriySdelalHodPeredomnoy(m_OtherPlayers, SelfIndex, PeredomnoyActor);
+        if (bOk == false)
+        {
+            //todo error;
+            return;
+        }
+        qDebug() << "Им игрока который сделал ход передомной" << PeredomnoyActor.PlayerName();
+
+    }
+    //showTable();
+}
+
 
 bool CFindPlayingCards::GetStatus(std::vector<std::vector<CTexasHoldem> > Tables, CActor &Actor)
 {

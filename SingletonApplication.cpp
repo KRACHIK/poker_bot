@@ -14,14 +14,15 @@ void SingletonApplication::Send()
 {
     qDebug() << "[" << __FUNCTION__ << "] : ";
 
-    CServerNetwork  networkObj;
-    networkObj.ClientSay(m_OtherPlayers);
+    //CServerNetwork  networkObj;
+    //networkObj.ClientSay(m_OtherPlayers);
+    //
+    //if (m_PtrActor != nullptr)
+    //{
+    //    CActor tmp = *m_PtrActor;
+    //    networkObj.ClientSay(tmp );
+    //}
 
-    if (m_PtrActor != nullptr)
-    {
-        CActor tmp = *m_PtrActor;
-         networkObj.ClientSay(tmp );
-    }
 
 }
 
@@ -38,14 +39,18 @@ CInput *SingletonApplication::GetPtrUserInputForm() const
 void SingletonApplication::InsertNewPlayer(int Index, QString Name)
 {
     qDebug() << "[" << __FUNCTION__ << "] : Index "  << Index << " Name  " <<  Name;
-    CActor Actor (Name, Index);
-    m_OtherPlayers.push_back(Actor);
 
+    CActor Actor (Name, Index);
+
+    srand(time(0));
+    std::string UniquePlayerID = std::string(Name.toStdString()) + (std::to_string(Index)) +(std::to_string(rand()%9999999));
+    Actor.setUniquePlayerID( UniquePlayerID );
+
+    m_OtherPlayers.push_back(Actor);
     if (m_OtherPlayers.size() >= 6)
     {
         Send();
     }
-
 
 }
 
@@ -69,9 +74,19 @@ CSetting & SingletonApplication::GetPtrSetting()
     return m_Setting;
 }
 
+void SingletonApplication::setFormRenderInfo(CRenderInfo *pFormRenderInfo)
+{
+    m_pFormRenderInfo = pFormRenderInfo;
+}
+
 std::vector<CActor> SingletonApplication::GetOtherPlayer()
 {
     return m_OtherPlayers;
+}
+
+CActor &SingletonApplication::GetOtherPlayer(int index)
+{
+    return m_OtherPlayers[index];
 }
 
 

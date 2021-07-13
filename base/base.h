@@ -8,6 +8,13 @@
 
 
 #define TEXAS_HOLDEM_PLAYING_CARD 2
+#define TEXT_LOG_IN_CLIENT "[На клиенте] : "
+
+
+enum class ECOMMAND : int
+{
+    CLIENT_REQ_COMPUTE_HOD  = 1,
+};
 
 
 
@@ -210,6 +217,7 @@ public:
 typedef CPlayingCard PC;
 typedef CTexasHoldem TH;
 
+
 class CActor
 {
 /* Этот класс Эмитирует человека который нажимает на кноаки в комьютерной игре., и
@@ -250,6 +258,9 @@ public:
 
    void SetFStavka(float fStavka);
 
+   std::string uniquePlayerID() const;
+   void setUniquePlayerID(const std::string &uniquePlayerID);
+
 private:
    QString m_PlayerName = "";
    int m_PlayerIndex = 0;
@@ -259,10 +270,16 @@ private:
     QString  str_PointerToPositio = "cpp_not_init";
        // BB SB..
 
+    std::string m_uniquePlayerID = "";
 
 };
 
 
+
+class CBase{
+public:
+    static size_t GetIndexPlayerActor(std::vector<CActor> OtherActor, CActor Actor);
+};
 
 
 class CServerLogicAnswerData
@@ -315,5 +332,32 @@ public:
     std::string  m_ValueStavkaUpAAfterFindPlayerCardInTable = "2.5"; //(QString stavkaUpValue)
 };
 
+
+class CCommonSteepByStepDBGLog{
+
+private:
+  CCommonSteepByStepDBGLog() { }
+  CCommonSteepByStepDBGLog( const CCommonSteepByStepDBGLog& );
+  CCommonSteepByStepDBGLog& operator=( CCommonSteepByStepDBGLog& );
+
+public:
+  static CCommonSteepByStepDBGLog& GetInstance()
+  {
+      static CCommonSteepByStepDBGLog m_STeepByStepDBGLog;
+      return m_STeepByStepDBGLog;
+  }
+
+
+    void AppenText(const std::string & Log)
+    {
+        m_sLog += Log + "\n";
+    }
+
+
+    std::string GetTextLog() const;
+
+private:
+    std::string m_sLog;
+};
 
 #endif // BASE_H

@@ -33,8 +33,11 @@ public:
 
     //CActor & GetPlayerActor();
 
+    // -------------------  NETWORK INIT -------------------
     void SetPlayerActor(CActor Actor);
     void SetOtherPlayer(std::vector<CActor> OtherPlayers);
+
+    void Execut(ECOMMAND Cmd);
 
 private:
     CActor m_Actor;

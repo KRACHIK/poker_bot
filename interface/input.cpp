@@ -3,92 +3,24 @@
 #include <SingletonApplication.h>
 #include "base/base.h"
 
+#include <iostream>
+
+
 CInput::CInput(QObject* parent) : QObject(parent)
 {
 }
 
-void CInput::ucazatbPositiySELF()
-{
 
-    qDebug() << "[" << __FUNCTION__ << "] : m_SelectedIndex=" <<  m_SelectedIndex
-             << "я подтверждаю что ВЛАДЕЮ МАРКЕРОМ с индексом "
-             << "m_SelectedIndex=" <<  m_SelectedIndex;
-
-    QString StrPointerToPosition =  SingletonApplication::GetInstance().GetOtherPlayer(m_SelectedIndex).GetStrPointerToPosition();
-
-
-    CActor *pActor =  &SingletonApplication::GetInstance().GetOtherPlayer(m_SelectedIndex);
-    SingletonApplication::GetInstance().SetPtrActor(pActor);
-    SingletonApplication::GetInstance().GetPtrActor()->SetStrPointerToPosition(StrPointerToPosition );
-}
-
-void CInput::ucazatbPositiyiStart()  {
-    qDebug() << "[" << __FUNCTION__ << "] : m_SelectedIndex=" <<  m_SelectedIndex
-             << "Кликни мышью на человека, которому присвоен маркер D";
-}
-
-
-
-void CInput::ucazatbPositiyiStop()
-{ // TODO MOVE
-
-    qDebug() << "[" << __FUNCTION__ << "] : m_SelectedIndex=" <<  m_SelectedIndex
-             << "я подтверждаю что человек с индексом "
-             << "m_SelectedIndex=" <<  m_SelectedIndex
-             << "вледеет маркером D";
-
-
-
-    int NewIndex_1 = (m_SelectedIndex + 1) % 6;
-    int NewIndex_2 = (m_SelectedIndex + 2 ) % 6;
-
-    qDebug() << "[" << __FUNCTION__ << "] : новпя позиция для ставки 1.0 =" <<  NewIndex_1;
-    qDebug() << "[" << __FUNCTION__ << "] : новпя Следующая позиция для ставки 0.5=" <<  NewIndex_2;
-
-    SingletonApplication::GetInstance().GetOtherPlayer(NewIndex_1).upStavka("0.5");
-    SingletonApplication::GetInstance().GetOtherPlayer(NewIndex_2).upStavka("1.0");
-
-
-    int gamePoleSize = SingletonApplication::GetInstance().GetOtherPlayer().size(); // = 6
-
-    for ( int i =0, k=0; i < gamePoleSize ; i++ )
-    {
-
-        int NewPosition = (m_SelectedIndex + i) % gamePoleSize ;
-
-        CActor & pActor = SingletonApplication::GetInstance().GetOtherPlayer(NewPosition);
-
-        pActor.SetStrPointerToPosition(SingletonApplication::GetInstance().ContainerPosition().m_Pos[i].d.c_str());
-
-
-        // ?
-    }
-
-    showTable();
-    /*
-
-                5  <----
-            1
-            2
-            3
-            4
-            5       <------- +1
-            6<-END  <------- +2
-            7
-            8
-            9
-            10
-            11
-
-
-        */
-
-
-}
 
 void CInput::receiveFromQml(QString ButtonCode)
 {
     qDebug() << "[" << __FUNCTION__ << "] : "<< ButtonCode;
+
+
+
+    CCommonSteepByStepDBGLog::GetInstance().AppenText( TEXT_LOG_IN_CLIENT "Польззователь указал пальцем на свои карты: " + ButtonCode.toStdString());
+
+    qDebug() << "[" << __FUNCTION__ << "] : "<< CCommonSteepByStepDBGLog::GetInstance().GetTextLog().c_str();
 
     {
         CPlayingCard PlayingCard; //(1,"10b");
@@ -329,24 +261,13 @@ void CInput::receiveFromQml(QString ButtonCode)
     }
 
 
-    // Увеличиваем счётчик и высылаем сигнал с его значением
-    ++m_counter;
-    emit sendToQml(m_counter);
-    renderSelfCard();
+    //kr4 renderSelfCard();
 }
 
-void CInput::clearPlayingCards()
-{
-    qDebug() << "[" << __FUNCTION__ << "] : ";
-    SingletonApplication::GetInstance().Clear();
-    renderSelfCard();
-}
+#if 0
 
-void CInput::confirm()
-{
-    qDebug() << "[" << __FUNCTION__ << "] : ";
-    SingletonApplication::GetInstance().Send();
-}
+
+
 
 void CInput::renderSelfCard()
 {
@@ -373,22 +294,11 @@ void CInput::renderSelfCard()
     }
 }
 
-void CInput::selectedIndex(int index)
-{
-    qDebug() << "[" << __FUNCTION__ << "] : " << index;
-    m_SelectedIndex  = index;
-}
 
 void CInput::setPositions(int Index)
 {
     qDebug() << "[" << __FUNCTION__ << "] : " << Index;
     SingletonApplication::GetInstance();
-}
-
-void CInput::confiirmInit(int Index, QString Name)
-{
-    qDebug() << "[" << __FUNCTION__ << "] : " << Index << " Name: " << Name;
-    SingletonApplication::GetInstance().InsertNewPlayer(Index, Name);
 }
 
 void CInput::initEnd()
@@ -404,8 +314,71 @@ void CInput::dbg()
 
 }
 
-void CInput::showTable()
+
+
+}
+
+void CInput::updateGUI()
 {
+    qDebug() << "[" << __FUNCTION__ << "] : " ;
+    showTable();
+}
+
+void CInput::clearStavkaForAllPlayer(){
+    qDebug() << "[" << __FUNCTION__ << "] : m_SelectedIndex=" <<  m_SelectedIndex;
+
+    int gamePoleSize = SingletonApplication::GetInstance().GetOtherPlayer().size(); // = 6
+
+    for ( int i =0, k=0; i < gamePoleSize ; i++ )
+    {
+        SingletonApplication::GetInstance().GetOtherPlayer(i).SetFStavka(0.0);
+    }
+
+    showTable();
+}
+
+void CInput::endGame()
+{
+
+#if 0
+    qDebug() << "[" << __FUNCTION__ << "] : " ;
+   ucazatbPositiyiStop();
+   clearStavkaForAllPlayer();
+   ucazatbPositiyiStop();
+#endif
+}
+
+void CInput::clearPlayingCardsForThisPlayer(int index)
+{
+    qDebug() << "[" << __FUNCTION__ << "] : " ;
+    SingletonApplication::GetInstance().GetOtherPlayer(index).ClearPlayingCards();
+    SingletonApplication::GetInstance().GetOtherPlayer(index).eventClearPlayingCardsForOtherPlayer(/*true*/1) ;
+    SingletonApplication::GetInstance().Send();
+}
+
+
+
+void CInput::setValueStavkaUpAAfterFindPlayerCardInTable(QString stavkaUpValue)
+{
+    SingletonApplication::GetInstance().GetPtrSetting().m_ValueStavkaUpAAfterFindPlayerCardInTable = stavkaUpValue.toStdString();
+}
+
+void CRenderInfo::dbg()
+{
+    std::string s = std::to_string( rand()%1000 );
+    emit tara(s.c_str());
+}
+
+
+#endif
+
+void CRenderInfo::updateForm(){
+    showTable();
+}
+
+void CRenderInfo::showTable()
+{
+#if 1
     emit clearTable();
     for ( CActor it  :  SingletonApplication::GetInstance().GetOtherPlayer()  )
     {
@@ -431,7 +404,7 @@ void CInput::showTable()
 
 
 
-        emit  addLinesToTable(
+        emit addLinesToTable(
                     int_INDEX
                     ,int_VISIBILITY_PUSHBUTTON_SBROW_MAPS
                     ,int_VISIBILITY_BUTTONS_INCREASE_BID
@@ -444,54 +417,5 @@ void CInput::showTable()
                     );
 
     }
-
-}
-
-void CInput::updateGUI()
-{
-    qDebug() << "[" << __FUNCTION__ << "] : " ;
-    showTable();
-}
-
-void CInput::clearStavkaForAllPlayer(){
-    qDebug() << "[" << __FUNCTION__ << "] : m_SelectedIndex=" <<  m_SelectedIndex;
-
-    int gamePoleSize = SingletonApplication::GetInstance().GetOtherPlayer().size(); // = 6
-
-    for ( int i =0, k=0; i < gamePoleSize ; i++ )
-    {
-        SingletonApplication::GetInstance().GetOtherPlayer(i).SetFStavka(0.0);
-    }
-
-    showTable();
-}
-
-void CInput::endGame()
-{
-    qDebug() << "[" << __FUNCTION__ << "] : " ;
-
-   ucazatbPositiyiStop();
-   clearStavkaForAllPlayer();
-   ucazatbPositiyiStop();
-}
-
-void CInput::clearPlayingCardsForThisPlayer(int index)
-{
-    qDebug() << "[" << __FUNCTION__ << "] : " ;
-    SingletonApplication::GetInstance().GetOtherPlayer(index).ClearPlayingCards();
-    SingletonApplication::GetInstance().GetOtherPlayer(index).eventClearPlayingCardsForOtherPlayer(/*true*/1) ;
-    SingletonApplication::GetInstance().Send();
-}
-
-void CInput::upStavkaForThisPlayer(int index, QString stavkaValueStr)
-{
-    qDebug() << "[" << __FUNCTION__ << "] : " ;
-    SingletonApplication::GetInstance().GetOtherPlayer(index).upStavka(stavkaValueStr);
-
-    SingletonApplication::GetInstance().Send();
-}
-
-void CInput::setValueStavkaUpAAfterFindPlayerCardInTable(QString stavkaUpValue)
-{
-    SingletonApplication::GetInstance().GetPtrSetting().m_ValueStavkaUpAAfterFindPlayerCardInTable = stavkaUpValue.toStdString();
+ #endif
 }

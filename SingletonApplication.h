@@ -35,11 +35,13 @@ public:
     std::vector<CActor> GetOtherPlayer();
 
 
-     CActor & GetOtherPlayer(int index)
+     CActor & GetOtherPlayer(int index);
+
+
+     CActor GetCloneOtherPlayer(int index)
      {
          return m_OtherPlayers[index];
      }
-
 
     void InsertNewPlayer(int Index, QString Name);
 
@@ -49,9 +51,12 @@ public:
     void SetPtrActor(CActor *PtrActor);
     CSetting & GetPtrSetting();
 
+    void setFormRenderInfo(CRenderInfo *pFormRenderInfo);
+
 private:
     CActor * m_PtrActor = nullptr; // Это модель которая иметирует нас
     CInput * m_pUserInputForm;
+    CRenderInfo * m_pFormRenderInfo;
     std::vector<CActor> m_OtherPlayers; // Это модель которая иметирует наших соперников
     CContainerPosition m_ContainerPosition;
     CSetting m_Setting;

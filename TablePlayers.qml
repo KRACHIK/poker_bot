@@ -54,22 +54,13 @@ ApplicationWindow
 */
 
 
-
-
-
     Connections
     {
-        target: FormUserInput
-        onEventInitStol:
-        {
-            buttonEndInit.visible = false
-        }
+        target: FormRenderInfo
 
-        onClearTable :
-        {
+        onClearTable : {
             listModelCircle.clear()
         }
-
 
         onAddLinesToTable:
         {
@@ -84,21 +75,36 @@ ApplicationWindow
                 ,m_ID_IMG_MARKER_2 : str_ID_IMG_MARKER_2
                 ,m_floatStavka : floatStavka
                 })
-
         } // onAddLinesToTable
+    }
+
+
+
+
+    Connections
+    {
+        target: FormUserInput
+        onEventInitStol:
+        {
+            buttonEndInit.visible = false
+        }
+
+
+
+
     }
 
 
     Button {
         id: button_DBG1
-        x: 11
+        x: 6
         y: 34
         width: 344
         height: 22
         text: qsTr("перерисовать модель стола по инфе от impl_server")
 
         onClicked: {
-            FormUserInput.updateGUI()
+            FormRenderInfo.updateForm()
         }
     }
 
@@ -237,7 +243,7 @@ ApplicationWindow
             }
 
             /// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-             delegate:
+              delegate:
             /// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             RadioDelegate
             {
@@ -248,7 +254,7 @@ ApplicationWindow
                     //console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++")
                     //button_catch_cards.visible = false
 
-                    FormUserInput.selectedIndex(index)
+                    FormDefaultPlayerAction.selectedIndex(index)
                 }
 
                 y: 8
@@ -325,7 +331,7 @@ ApplicationWindow
                         {
                             console.log("Повысить ставку")
 
-                            FormUserInput.upStavkaForThisPlayer(index, textField_m_STAVKA.text)
+                            FormCheatServerAction.upStavkaForThisPlayer(index, textField_m_STAVKA.text)
                         }
                     }
 
@@ -335,7 +341,7 @@ ApplicationWindow
                         x: 4;  y: 87;  width: 142;  height: 15
                         onClicked:
                         {
-                            console.log("Повысить ставку")
+                            console.log("Позиция на этом Player")
                             FormUserInput.setPositions(index)
                         }
                         visible: control1Circle.checked ? true : false
@@ -366,7 +372,7 @@ ApplicationWindow
                         onClicked:
                         {
                             console.log("Имя сохранено")
-                            FormUserInput.confiirmInit(m_INDEX, textFieldplayerName.text )
+                            FormDefaultPlayerAction.insertPlayer(m_INDEX, textFieldplayerName.text )
 
                             // Прячем кнопку подтверждения своего имени
                             buttonConfirmInit.visible = false
@@ -518,6 +524,29 @@ ApplicationWindow
 
 
 
+    //------------------------------------------------------------------------
+    Rectangle
+    {
+        x: 361;  y: 6; width: 318; height: 50
+        border.color: "black"
+
+        RowLayout {
+
+            anchors.fill: parent
+
+
+            Button {
+                text: "указать на Маркер D"
+                onClicked: { FormDefaultPlayerAction.ucazatbPositiyiStop() }
+            }
+
+            Button {
+                text: "указать(на СВОЮ позицию)"
+                onClicked: { FormDefaultPlayerAction.ucazatbPositiySELF() }
+            }
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////
 
 
 

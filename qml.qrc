@@ -3,6 +3,7 @@
         <file>PlayerStat.qml</file>
         <file>TablePlayers.qml</file>
         <file>main.qml</file>
+        <file>FormServerActions.qml</file>
         <file>res/2k.PNG</file>
         <file>res/3k.PNG</file>
         <file>res/4k.PNG</file>
@@ -58,14 +59,11 @@
         <file>res/qc.PNG</file>
         <file>res/qp.PNG</file>
         <file>res/romb_blue.PNG</file>
-
         <file>res/BU.PNG</file>
         <file>res/SB.PNG</file>
         <file>res/BB.PNG</file>
         <file>res/EP.PNG</file>
         <file>res/MP.PNG</file>
         <file>res/CO.PNG</file>
-
     </qresource>
-
 </RCC>

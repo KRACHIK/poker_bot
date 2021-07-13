@@ -1,9 +1,10 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-
 #include <QQmlContext>
-#include "SingletonApplication.h"
 
+#include "interface/form_default_player_action.h"
+#include "interface/form_cheat_server_action.h"
+#include "SingletonApplication.h"
 #include "interface/input.h"
 
 
@@ -23,10 +24,17 @@ int main(int argc, char *argv[])
     QQmlContext *context = engine.rootContext();
 
      CInput UserInputForm; //= SingletonApplication::GetForm();
+     CRenderInfo FormRenderInfo;
+     CFormDefaultPlayerAction FormDefaultPlayerAction;
+     CFormCheatServerAction FormCheatServerAction;
 
      SingletonApplication::GetInstance().SetUserInputForm(&UserInputForm);
 
+     context->setContextProperty("FormDefaultPlayerAction", &FormDefaultPlayerAction);
+     context->setContextProperty("FormRenderInfo", &FormRenderInfo);
      context->setContextProperty("FormUserInput", &UserInputForm);
+     context->setContextProperty("FormCheatServerAction", &FormCheatServerAction);
+
 
     //-----------------------------------------------------------------------------------------
 

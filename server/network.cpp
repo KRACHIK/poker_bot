@@ -53,7 +53,7 @@ bool CServerNetwork::ServerSay( CServerLogicAnswerData  ServerLogicAnswerData)
 #endif
     emit SingletonApplication::GetInstance().GetPtrUserInputForm()->setText_top20( MsgTop20);
     emit SingletonApplication::GetInstance().GetPtrUserInputForm()->setText_UTG_SH(MsgUTG_SH);
-    \
+    
     //if (ServerLogicAnswerData.IsActionFOLD_For_TAB_UTG_SH())
     //{
     //    qDebug() << "[" << __FUNCTION__ << "] : DESIGN MAKER FOLD";
@@ -71,7 +71,8 @@ bool CServerNetwork::ServerSay( CServerLogicAnswerData  ServerLogicAnswerData)
 
         std::string ValueStavkaUpAAfterFindPlayerCardInTable =  SingletonApplication::GetInstance().GetPtrSetting().m_ValueStavkaUpAAfterFindPlayerCardInTable;
         SingletonApplication::GetInstance().GetPtrActor()->upStavka( ValueStavkaUpAAfterFindPlayerCardInTable.c_str() );   // Todo move in server
-        SingletonApplication::GetInstance().GetPtrUserInputForm()->showTable(); // Todo move in server
+
+       // kr4 SingletonApplication::GetInstance().GetPtrUserInputForm()->showTable(); // Todo move in server
     }
 
 
@@ -94,7 +95,7 @@ bool CServerNetwork::ServerSayInitStol(std::string Msg)
     qDebug() << "[" << __FUNCTION__ << "] : ";
 
     emit SingletonApplication::GetInstance().GetPtrUserInputForm()->eventInitStol();
-    SingletonApplication::GetInstance().GetPtrUserInputForm()->showTable();
+    // kr4 SingletonApplication::GetInstance().GetPtrUserInputForm()->showTable();
     //SingletonApplication::GetInstance().GetPtrUserInputForm()->renderSelfCard();
     return true;
 }
@@ -103,16 +104,32 @@ void CServerNetwork::ClientSay(CActor Actor)
 {
     //qDebug() << "[" << __FUNCTION__ << "] : ";
     //
-    SingletonServerLogic::GetInstance().SetPlayerActor(Actor);
+    // kr4 SingletonServerLogic::GetInstance().SetPlayerActor(Actor);
     SingletonServerLogic::GetInstance().Tick();
 }
+
 
 void CServerNetwork::ClientSay(std::vector<CActor> OtherPlayers)
 {
     qDebug() << "[" << __FUNCTION__ << "] : ";
-
     SingletonServerLogic::GetInstance().SetOtherPlayer(OtherPlayers);
 
     CServerNetwork networkObj;
     networkObj.ServerSayInitStol( "Ok Init stol");
 }
+
+void CServerNetwork::ClientSay(std::vector<CActor> OtherPlayers, ECOMMAND Cmd)
+{
+    qDebug() << "[" << __FUNCTION__ << "] : ";
+    SingletonServerLogic::GetInstance().SetOtherPlayer(OtherPlayers);
+    SingletonServerLogic::GetInstance().Execut(Cmd);
+
+
+}
+
+
+
+//void CServerNetwork::ClientSay(std::vector<CActor> OtherPlayers, ECOMMAND Cmd)
+//{
+//
+//}

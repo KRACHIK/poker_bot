@@ -846,6 +846,19 @@ import QtQuick.Layouts 1.3
         id : formTablePlayers
     }
 
+    FormServerActions {
+        id : formServerActions
+    }
+
+
+    Connections {
+        target: FormRenderInfo
+
+        onTara : //(QString str);
+        {
+            button_dbg_render.text = str
+        }
+  }
 
     Connections {
         target: FormUserInput // Указываем целевой объект для соединения
@@ -886,73 +899,41 @@ import QtQuick.Layouts 1.3
         anchors.bottomMargin: 15
     }
 
-    RowLayout {
-        x: 13
-        y: 291
-        width: 1001
-        height: 57
-        Button {
-            text: "Избавиться от этих плохих карт"
 
-            onClicked: { FormUserInput.clearPlayingCards()  }
-        }
 
-        Button {
-            text: "Повысить ставку"
-            onClicked: {
-                FormUserInput.upStavkaForThisPlayer(0, textFieldStavka.text)
+
+
+    Rectangle{
+        border.color: "black"
+
+        x: 13; y: 344; width: 524; height: 44
+
+        RowLayout {
+            anchors.fill: parent
+            Button
+            {
+                text: "Запрос на поиск в таблицах"
+                onClicked:
+                {
+                    FormCheatServerAction.compute_hod()
+                }
+            }
+
+            Button {
+                id: button_dbg_render
+                text: "dbg"
+                onClicked: { FormRenderInfo.dbg () }
+            }
+
+            Button {
+                text: "Открыть статистику"
+            }
+
+            Button {
+                text: "Завершить игру"
             }
         }
-
-        TextField{
-            id: textFieldStavka
-        }
-
-        Button {
-            text: "Открыть статистику"
-            onClicked: {
-                formPlayerStat.show()
-                formTablePlayers.show()
-            }
-        }
-
-        //Button {
-        //    text: "Палка указалка(на позицию) Часть 1"
-        //    onClicked: { FormUserInput.ucazatbPositiyiStart() }
-        //}
-
-        Button {
-            text: "Палка указалка(на позицию) Часть 1"
-            onClicked: { FormUserInput.ucazatbPositiyiStop() }
-        }
-
-        Button {
-            text: "Палка указалка(на СВОЮ позицию) Часть 2"
-            onClicked: { FormUserInput.ucazatbPositiySELF() }
-        }
-
-        Button {
-            text: "Завершить игру"
-            onClicked: { FormUserInput.endGame() }
-        }
     }
-
-
-    RowLayout {
-        x: 18
-        y: 417
-        width: 313
-        height: 44
-
-
-
-        Button
-        {
-            text: "Отправить на сервер свой ход"
-            onClicked: { FormUserInput.confirm() }
-        }
-    }
-
     RowLayout {
         id : rowlayoutStat
         x: 369;  y: 412
@@ -965,7 +946,7 @@ import QtQuick.Layouts 1.3
             border.color: "black"
 
             Text {
-                id: name
+
                 x: 8
                 y: 16
                 text: qsTr("Твои карты ")
@@ -1015,13 +996,12 @@ import QtQuick.Layouts 1.3
 
 
 
-
 }
 
 
 
-/*##^##
-Designer {
-    D{i:0;formeditorZoom:1.100000023841858}
-}
-##^##*/
+
+
+
+
+
