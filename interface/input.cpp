@@ -264,10 +264,16 @@ void CInput::receiveFromQml(QString ButtonCode)
     //kr4 renderSelfCard();
 }
 
+
+void CInput::clearPlayingCardsForThisPlayer(int index)
+{
+    qDebug() << "[" << __FUNCTION__ << "] : " ;
+    SingletonApplication::GetInstance().GetOtherPlayer(index).ClearPlayingCards();
+    SingletonApplication::GetInstance().GetOtherPlayer(index).eventClearPlayingCardsForOtherPlayer(/*true*/1) ;
+    SingletonApplication::GetInstance().Send();
+}
+
 #if 0
-
-
-
 
 void CInput::renderSelfCard()
 {
@@ -348,16 +354,6 @@ void CInput::endGame()
 #endif
 }
 
-void CInput::clearPlayingCardsForThisPlayer(int index)
-{
-    qDebug() << "[" << __FUNCTION__ << "] : " ;
-    SingletonApplication::GetInstance().GetOtherPlayer(index).ClearPlayingCards();
-    SingletonApplication::GetInstance().GetOtherPlayer(index).eventClearPlayingCardsForOtherPlayer(/*true*/1) ;
-    SingletonApplication::GetInstance().Send();
-}
-
-
-
 void CInput::setValueStavkaUpAAfterFindPlayerCardInTable(QString stavkaUpValue)
 {
     SingletonApplication::GetInstance().GetPtrSetting().m_ValueStavkaUpAAfterFindPlayerCardInTable = stavkaUpValue.toStdString();
@@ -382,6 +378,7 @@ void CRenderInfo::showTable()
     emit clearTable();
     for ( CActor it  :  SingletonApplication::GetInstance().GetOtherPlayer()  )
     {
+
         int     int_INDEX                                    = it.PlayerIndex() ;
         int     int_VISIBILITY_PUSHBUTTON_SBROW_MAPS         = 0 ;
         int     int_VISIBILITY_BUTTONS_INCREASE_BID          = 0 ;

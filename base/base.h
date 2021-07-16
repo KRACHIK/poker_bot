@@ -18,6 +18,8 @@ enum class ECOMMAND : int
 
 
 
+
+
 enum EStatus
 {
     NONE,
@@ -261,6 +263,8 @@ public:
    std::string uniquePlayerID() const;
    void setUniquePlayerID(const std::string &uniquePlayerID);
 
+   void setPlayerName(const QString &PlayerName);
+
 private:
    QString m_PlayerName = "";
    int m_PlayerIndex = 0;
@@ -314,16 +318,28 @@ public:
 };
 
 
-class CContainerPosition{
 
+enum class EPos: int
+{
+    POS_BU = 0
+    ,POS_SB
+    ,POS_BB
+    ,POS_EP
+    ,POS_MP
+    ,POS_CO
+};
+
+
+class CContainerPosition
+{
 public:
     std::vector <CGamePosition> m_Pos= {
-         CGamePosition{"res/BU.PNG"}
-        ,CGamePosition{"res/SB.PNG"}
-        ,CGamePosition{"res/BB.PNG"}
-        ,CGamePosition{"res/EP.PNG"}
-        ,CGamePosition{"res/MP.PNG"}
-        ,CGamePosition{"res/CO.PNG"}
+         CGamePosition{"res/BU.PNG"} /* 0 */
+        ,CGamePosition{"res/SB.PNG"} /* 1 */
+        ,CGamePosition{"res/BB.PNG"} /* 2 */
+        ,CGamePosition{"res/EP.PNG"} /* 3 */
+        ,CGamePosition{"res/MP.PNG"} /* 4 */
+        ,CGamePosition{"res/CO.PNG"} /* 5 */
     };
 };
 

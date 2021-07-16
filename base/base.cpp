@@ -93,6 +93,11 @@ void CActor::setUniquePlayerID(const std::string &uniquePlayerID)
     m_uniquePlayerID = uniquePlayerID;
 }
 
+void CActor::setPlayerName(const QString &PlayerName)
+{
+    m_PlayerName = PlayerName;
+}
+
 CPlayingCard::CPlayingCard(ESuit Suit, ER Rank)
     : m_Number ( 0)
     , m_Text  ( "")

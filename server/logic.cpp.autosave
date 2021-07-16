@@ -370,40 +370,47 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
         }
         else if (bFind_MP)
         {
-
-        }
-        else if (bFind_EP)
-        {
-
-        }
-        else
-        {
-
-        }
-
-
-        if (bFind_MP)
-        {
             if (OtherPlayersWant_MP.isEventClearPlayingCardsForOtherPlayer() )
             {
                 qCritical() << "PlayerName=" << OtherPlayersWant_MP.PlayerName()
                             << " Stavka= " << OtherPlayersWant_MP.GetStavka()
                             << " Сбросил свои карты "
-                            << "ищем в первой столбце в таблице MP";
+                            << "ищем в первой столбце в таблице  ?";
             }
             else
             {
                 qCritical() << " PlayerName=" << OtherPlayersWant_MP.PlayerName()
                             << " Stavka= " << OtherPlayersWant_MP.GetStavka()
                             << " повышал  ставку "
-                            << " ищем наши карты во втором столбце в таблице vsUTG";
+                            << " ищем наши карты во  ? ";
+
+            }
+        }
+        else if (bFind_EP)
+        {
+            if (OtherPlayersWant_EP.isEventClearPlayingCardsForOtherPlayer() )
+            {
+                qCritical() << "PlayerName=" << OtherPlayersWant_EP.PlayerName()
+                            << " Stavka= " << OtherPlayersWant_EP.GetStavka()
+                            << " Сбросил свои карты "
+                            << "ищем в первой столбце в таблице  ?";
+            }
+            else
+            {
+                qCritical() << " PlayerName=" << OtherPlayersWant_EP.PlayerName()
+                            << " Stavka= " << OtherPlayersWant_EP.GetStavka()
+                            << " повышал  ставку "
+                            << " ищем наши карты во  ? ";
 
             }
         }
         else
         {
-            qCritical() << "1игрока не существует, то есть за игровым столом не 6 человек";
+            qCritical() <<  "Оба игрока отсутствуют за игровым столом";
         }
+
+
+       
 
 
         assert(false);

@@ -56,11 +56,7 @@ void CFormDefaultPlayerAction::ucazatbPositiyiStop()
         int NewPosition = (m_SelectedIndex + i) % gamePoleSize ;
 
         CActor & pActor = SingletonApplication::GetInstance().GetOtherPlayer(NewPosition);
-
         pActor.SetStrPointerToPosition(SingletonApplication::GetInstance().ContainerPosition().m_Pos[i].d.c_str());
-
-
-        // ?
     }
 
     //showTable();
@@ -77,6 +73,10 @@ void CFormDefaultPlayerAction::ucazatbPositiySELF()
              << "m_SelectedIndex=" <<  m_SelectedIndex;
 
     CActor *pActor =  &SingletonApplication::GetInstance().GetOtherPlayer(m_SelectedIndex);
+
+    pActor->setPlayerName( "++++++++++++++" + pActor->PlayerName() + "++++++++++++");
+
+
     CActor CloneActor = SingletonApplication::GetInstance().GetCloneOtherPlayer(m_SelectedIndex);
     QString StrPointerToPosition =  SingletonApplication::GetInstance().GetOtherPlayer(m_SelectedIndex).GetStrPointerToPosition();
     SingletonApplication::GetInstance().SetPtrActor(pActor);

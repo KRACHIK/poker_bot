@@ -103,4 +103,32 @@ public:
 */
 
 
+class CDisignMaker{
+public:
+
+};
+
+
+class CActorFilter
+{
+public:
+    static bool FindPlayerByPossition( const std::vector<CActor> &OtherPlayers, const CGamePosition &FindPosition, CActor & OutputPlayers );
+};
+
 #endif // LOGIC_H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
