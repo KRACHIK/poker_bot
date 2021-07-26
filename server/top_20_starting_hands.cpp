@@ -30,11 +30,11 @@ bool CTableTop20StartingHands::GetStatus(CActor &Actor)
     return bMath;
 }
 
-bool CTableTop20StartingHands::GetStatus_v2_shared_algo(CActor &Actor)
-{
-    //CFindPlayingCards::GetStatus(m_Tables, Actor);
-    return false;
-}
+//bool CTableTop20StartingHands::GetStatus_v2_shared_algo(CActor &Actor)
+//{
+//    //CFindPlayingCards::GetStatus(m_Tables, Actor);
+//    return false;
+//}
 
 std::vector<std::vector<CTexasHoldem> > CTableTop20StartingHands::GetTables() const
 {

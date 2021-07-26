@@ -2,6 +2,8 @@
 #include "network.h"
 
 #include <deque>
+#include<map>
+
 
 SingletonServerLogic &SingletonServerLogic::GetInstance() {
     static SingletonServerLogic instance;
@@ -251,26 +253,17 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
 {
     qDebug() << "[" << __FUNCTION__ << "] :   ";
 
-    qDebug() << "[" << __FUNCTION__ << "] :  Получить указатель на игрока который сделал ход передомной";
-    qDebug() << "[" << __FUNCTION__ << "] :  и если он повысел ставку то";
-    qDebug() << "[" << __FUNCTION__ << "] :  и если он сбросил ставку то";
-
-
     //CDisignMaker::Iskatb_seld_cards_v_zavisimosti_ot_posicii()
 
-
-
-
-
     CContainerPosition ContainerPosition;
-    if(m_Actor.GetStrPointerToPosition().toStdString() == ContainerPosition.m_Pos[3].d )
+    if(m_Actor.GetStrPointerToPosition().toStdString() == ContainerPosition.m_Pos[(int)EPos::POS_EP ].d )
     { // EP
         qCritical() <<  "Артем  [14.07.21 01:42] "
                       "Сброс карт или увеличение ставки начинается с игрока в позиции UTG,  "
                       "если мы находимся в позиции UTG  то сразу наш ход и мы ищем карты в таблице 1й столбик UTGsh";
         assert(false);
     }
-    else if(m_Actor.GetStrPointerToPosition().toStdString() == ContainerPosition.m_Pos[4].d )
+    else if(m_Actor.GetStrPointerToPosition().toStdString() == ContainerPosition.m_Pos[ (int)EPos::POS_MP].d )
     {
         // MP
         qCritical() <<  " Дальше, если мы в позиции MP,  проверяем повышал ли ставку игрок в UTG, если да то ищем наши карты "
@@ -307,7 +300,7 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
 
         assert(false);
     }
-    else if(m_Actor.GetStrPointerToPosition().toStdString() == ContainerPosition.m_Pos[5].d /*CO*/ )
+    else if(m_Actor.GetStrPointerToPosition().toStdString() == ContainerPosition.m_Pos[(int)EPos::POS_CO].d /*CO*/ )
     {
 
         qCritical() << "Дальше если мы в CO проверяем ходы игроков в UTG и MP и если кто-то сделал ставку "
@@ -327,7 +320,7 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
         {// Оба противника существуют
 
             if ( OtherPlayersWant_MP.isEventClearPlayingCardsForOtherPlayer()
-                    && OtherPlayersWant_EP.isEventClearPlayingCardsForOtherPlayer()
+                 && OtherPlayersWant_EP.isEventClearPlayingCardsForOtherPlayer()
                     )
             {
                qCritical()
@@ -360,6 +353,7 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
                 qCritical()  << " PlayerName=" << OtherPlayersWant_MP.PlayerName()
                             << "только один игрок повысил свою ставку";
             }
+
             else if (  !OtherPlayersWant_EP.isEventClearPlayingCardsForOtherPlayer())
             {
                 qCritical()  << " PlayerName=" << OtherPlayersWant_EP.PlayerName()
@@ -370,43 +364,248 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
         }
         else if (bFind_MP)
         {
-
-        }
-        else if (bFind_EP)
-        {
-
-        }
-        else
-        {
-
-        }
-
-
-        if (bFind_MP)
-        {
             if (OtherPlayersWant_MP.isEventClearPlayingCardsForOtherPlayer() )
             {
                 qCritical() << "PlayerName=" << OtherPlayersWant_MP.PlayerName()
                             << " Stavka= " << OtherPlayersWant_MP.GetStavka()
                             << " Сбросил свои карты "
-                            << "ищем в первой столбце в таблице MP";
+                            << "ищем в первой столбце в таблице  ?";
             }
             else
             {
                 qCritical() << " PlayerName=" << OtherPlayersWant_MP.PlayerName()
                             << " Stavka= " << OtherPlayersWant_MP.GetStavka()
                             << " повышал  ставку "
-                            << " ищем наши карты во втором столбце в таблице vsUTG";
+                            << " ищем наши карты во  ? ";
+
+            }
+        }
+        else if (bFind_EP)
+        {
+            if (OtherPlayersWant_EP.isEventClearPlayingCardsForOtherPlayer() )
+            {
+                qCritical() << "PlayerName=" << OtherPlayersWant_EP.PlayerName()
+                            << " Stavka= " << OtherPlayersWant_EP.GetStavka()
+                            << " Сбросил свои карты "
+                            << "ищем в первой столбце в таблице  ?";
+            }
+            else
+            {
+                qCritical() << " PlayerName=" << OtherPlayersWant_EP.PlayerName()
+                            << " Stavka= " << OtherPlayersWant_EP.GetStavka()
+                            << " повышал  ставку "
+                            << " ищем наши карты во  ? ";
 
             }
         }
         else
         {
-            qCritical() << "1игрока не существует, то есть за игровым столом не 6 человек";
+            qCritical() <<  "Оба игрока отсутствуют за игровым столом";
+        }
+
+        assert(false);
+    }
+    else if(m_Actor.GetStrPointerToPosition().toStdString() == ContainerPosition.m_Pos[(int)EPos::POS_BU].d   )
+    {
+        qCritical() << "Если мы позиции BU всё аналогично проверяем ходы игроков UTG MP Co,"
+                       "если кто-то сделал ставку ищем в таблицах второй колонки vsUTG vsMp vsCO,"
+                       "если все сбросили карты, то ищем в первой колонке BU ";
+
+        //mp=4
+        //EP=UTG=3
+
+        CActor OtherPlayersWant_CO, OtherPlayersWant_MP, OtherPlayersWant_EP;
+        bool bFind_CO = CActorFilter::FindPlayerByPossition( m_OtherPlayers,  ContainerPosition.m_Pos[(int)EPos::POS_CO ] , OtherPlayersWant_CO);
+        bool bFind_MP = CActorFilter::FindPlayerByPossition( m_OtherPlayers,  ContainerPosition.m_Pos[(int)EPos::POS_MP ] , OtherPlayersWant_MP);
+        bool bFind_EP = CActorFilter::FindPlayerByPossition( m_OtherPlayers,  ContainerPosition.m_Pos[(int)EPos::POS_EP] , OtherPlayersWant_EP);
+
+        std::vector<CActor> Protivnik;
+
+        if (bFind_CO)
+            Protivnik.push_back(OtherPlayersWant_CO);
+
+        if (bFind_MP)
+            Protivnik.push_back(OtherPlayersWant_MP);
+
+        if (bFind_EP)
+            Protivnik.push_back(OtherPlayersWant_EP);
+
+        if (Protivnik.size() == 3)
+        { /* вернет true если каждый игрок из массива сделал одинаковую ставку равную Value */
+            if(CActorFilter::IsAllPlayerEqualStavka ( Protivnik,  /*Value*/ 1 ))
+            {
+                qCritical() << "вернет true если каждый игрок из массива сделал одинаковую ставку равную 1";
+                qCritical () << "Find in BU OPEN За исключение оранжевого с двумя подчеркиваниями";
+            }
+            else if(CActorFilter::IsAllPlayerEqualStavkaNotEqualValue ( Protivnik,  /*Value*/ 1 ))
+            { /* вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value*/
+
+                    qCritical () << "  искать карты в  [ vs UTG]  ";
+            }
+            else if (CActorFilter::IsAllPlayerUPStavka( Protivnik ))
+            { /* вернет true если каждый игрок из массива поднял ставку*/
+                qCritical () << "Искать в vs4b в таблице под vs CO";
+            }
+            else if (CActorFilter::IsAllEventClearPlayingCards(Protivnik))
+            { // если все сбросили
+                qCritical () << "Find in BU OPEN ";
+            }
+            else
+            {  // ставку сделало только несколько человек это могут быть пары  <EP> и <MP> или <MP> и <CO> или <EP> и <CO>
+                 std::vector<CActor> ProtivnikStavkaUP = CActorFilter::GetPlayersStavkaUP ( Protivnik );
+
+                 /* вернет true если каждый игрок из массива сделал одинаковую ставку равную Value */
+                 if(CActorFilter::IsAllPlayerEqualStavka ( ProtivnikStavkaUP,  /*Value*/ 1 ))
+                 {
+                     qCritical() << "вернет true если  2 игрока из массива сделал одинаковую ставку равную 1";
+                     qCritical () << "Find in BU OPEN За исключение оранжевого с двумя подчеркиваниями";
+                 }
+                 else  if(CActorFilter::IsAllPlayerEqualStavkaNotEqualValue ( ProtivnikStavkaUP,  /*Value*/ 1 ))
+                 { /* вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value*/
+                         qCritical () << "вернет true если 2 игрока из массива сделал одинаковую ставку Не равную Value";
+                         qCritical () << "Find in vs UTG";
+                 }
+                 else if ( CActorFilter::IsAllPlayerUPStavka( Protivnik ))
+                 { /* вернет true если каждый игрок из массива поднял ставку*/
+                     qCritical () << "получить Указатель на позицию соперника слева от меня, который поднял ставку";
+                     if ("CO")
+                     {
+                         qCritical () << "искать в vs CO (за исключением белых картр)";
+                     }
+                     else if ("MP")
+                     {
+                         qCritical () << "искать в vs Mp (за исключением белых картр)";
+                     }
+                 }
+            }
+        }
+        else if (Protivnik.size() == 2)
+        {
+            if ( CActorFilter::IsAllPlayerUPStavka( Protivnik ))
+            {
+                /* вернет true если каждый игрок из массива сделал одинаковую ставку равную Value */
+                if(CActorFilter::IsAllPlayerEqualStavka ( Protivnik,  /*Value*/ 1 ))
+                {
+                    qCritical () << "искать карты в  [BU_OPEN] за исключением Оранжевого с двумя подчеркиванием";
+                }
+                else  if(CActorFilter::IsAllPlayerEqualStavkaNotEqualValue ( Protivnik,  /*Value*/ 1 ))
+                { /* вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value*/
+                    qCritical () << "vs MP  за исключением белых";
+                }
+                else if ( CActorFilter::IsAllPlayerUPStavka( Protivnik ))
+                {  // подняли на разное ?
+                    qCritical () << "Искать в vs4b в таблице под vs CO";
+                }
+            }
+            else if (CActorFilter::IsAllEventClearPlayingCards(Protivnik))
+            { // все сбросили
+                qCritical () << "Find in BU OPEN ";
+            }
+        }
+        else if (Protivnik.size() == 1)
+        {
+            if ( CActorFilter::IsAllPlayerUPStavka( Protivnik ))
+            {  // подняли  ?
+                if(CActorFilter::IsAllPlayerEqualStavka ( Protivnik,  /*Value*/ 1 ))
+                {
+                    qCritical () << "искать карты в  [BU_OPEN] за исключением Оранжевого с двумя подчеркиванием";
+                }
+                else if(CActorFilter::IsAllPlayerEqualStavkaNotEqualValue ( Protivnik,  /*Value*/ 1 ))
+                { /* вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value*/
+                    qCritical () << "vs CO за исключением белых";
+                }
+
+            }
+            else if (CActorFilter::IsAllEventClearPlayingCards(Protivnik))
+            { // все сбросили
+                qCritical () << "Find in BU OPEN ";
+            }
+        }
+        else if (Protivnik.empty())
+        {
+            qCritical () << "Find in BU OPEN ";
         }
 
 
-        assert(false);
+        /* вернет true если каждый игрок из массива сделал одинаковую ставку равную Value */
+        if(CActorFilter::IsAllPlayerEqualStavka ( Protivnik,  /*Value*/ 1 ))
+        {
+            qCritical() << "вернет true если каждый игрок из массива сделал одинаковую ставку равную 1";
+            qCritical() << "Find in BU OPEN За исключение оранжевого с двумя подчеркиваниями" ;
+        }
+        else  if(CActorFilter::IsAllPlayerEqualStavkaNotEqualValue ( Protivnik,  /*Value*/ 1 ))
+        { /* вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value*/
+                qCritical() << "вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value";
+                qCritical() << "Find in vs UTG";
+        }
+        else if ( CActorFilter::IsAllPlayerUPStavka( Protivnik ))
+        { /* вернет true если каждый игрок из массива поднял ставку*/
+            qCritical () << "получить указатель на позицию игрока слева от меня который поднял ставку";
+            if ("CO")
+            {
+                qCritical () << "искать VS CO за исключеним белых";
+            }
+            else if ("MP")
+            {
+                qCritical () << "искать VS MP за исключеним белых";
+            }
+        }
+
+
+        if ( CActorFilter::IsAllEventClearPlayingCards (Protivnik) )
+        { // если каждый игрок сбросил свои карты
+            qCritical() << "каждый игрок сбросил свои карты";
+        }
+        else
+        { // если не каждый игрок сбросил свои карты, то проверяем ,
+          // сколько игроков подняло ставку на оддинаковое значение
+
+            if (Protivnik.size() == 3)
+            { // если у нас 3 противника
+                if ( CActorFilter::IsAllPlayerEqualStavka(Protivnik))
+                { // если каждый из 3х противников поднял ставку на одинаковое значение
+
+                    // получить ближайшего (слево от меня человека который поднял ставку и смотреть на его позицию
+                    CActor ProtivnikLeft;
+                    if ( CActorFilter::GetFirstPlayerCotoriyPovisilStavky(Protivnik, ProtivnikLeft) )
+                    {
+                        qDebug ()<< "слево от меня человек  который поднял ставку  Name:"  << ProtivnikLeft.PlayerName() <<  " stavka: " << ProtivnikLeft.GetStavka();
+                    }
+                    else
+                    {
+                        // критическая ошибка
+                        assert(false);
+                    }
+                }
+
+                //else if (CActorFilter::IsAllPlayerEqualStavka(Protivnik, 2))
+
+            }
+            else if (Protivnik.size() == 2)
+            {
+                if ( CActorFilter::IsAllPlayerEqualStavka(Protivnik))
+                { // если каждый из 2х противников поднял ставку на одинаковое значение
+                }
+            }
+            else if (Protivnik.size() == 1)
+            {
+                if ( CActorFilter::IsAllPlayerEqualStavka(Protivnik))
+                { // если 1  противник поднял ставку
+                }
+
+            }
+
+        // (OtherPlayersWant_CO.GetStavka() == OtherPlayersWant_MP.GetStavka()  ==  OtherPlayersWant_EP.GetStavka() )
+        {
+        }
+
+
+
+            // ..bool CActorFilter::IsAllPlayerEqualStavka(const std::vector<CActor> &OtherPlayers)
+        }
+
+
+
     }
 
 
@@ -581,7 +780,7 @@ bool CActorFilter::FindPlayerByPossition( const std::vector<CActor> &OtherPlayer
     for (auto it : OtherPlayers)
     {
         if(it.GetStrPointerToPosition().toStdString() == FindPosition.d )
-        { // EP
+        {
             OutputPlayers = it;
             return true;
         }
@@ -589,3 +788,96 @@ bool CActorFilter::FindPlayerByPossition( const std::vector<CActor> &OtherPlayer
 
     return false;
 }
+
+bool CActorFilter::IsAllEventClearPlayingCards(const std::vector<CActor> &OtherPlayers)
+{
+    // Изначально предполагаю что все игроки сбросили свои карты.
+    bool AllEventClearPlayingCards  = true;
+
+    for (auto it : OtherPlayers)
+    {
+        if ( it.isEventClearPlayingCardsForOtherPlayer()    )
+        {
+            // все ОК
+        }
+        else
+        {
+            AllEventClearPlayingCards  = false;
+            break;
+            // Противник поднял ставку
+        }
+
+    }
+
+    return AllEventClearPlayingCards;
+}
+
+bool CActorFilter::IsAllPlayerUPStavka(const std::vector<CActor> &OtherPlayers)
+{
+    return false;
+}
+
+bool CActorFilter::IsAllPlayerEqualStavka(const std::vector<CActor> &OtherPlayers)
+{
+    // Изначально предполагаю что все игроки  .
+    float Stavka = OtherPlayers[0].GetStavka();
+
+    for (auto it : OtherPlayers)
+    {
+        if ( it.GetStavka() != Stavka )
+        {
+             // какойто из противников сделал ставку отличную от друго противника
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool CActorFilter::IsAllPlayerEqualStavkaNotEqualValue(const std::vector<CActor> &OtherPlayers, float Value  )
+{
+    return false;
+}
+
+bool CActorFilter::IsAllPlayerEqualStavka(const std::vector<CActor> &OtherPlayers, float Value)
+{
+    // Изначально предполагаю что все игроки  .
+    float Stavka = Value;
+
+    for (auto it : OtherPlayers)
+    {
+        if ( it.GetStavka() != Stavka )
+        {
+             // какойто из противников сделал ставку отличную от друго противника
+            return false;
+        }
+    }
+
+    return true;
+}
+
+std::vector<CActor> CActorFilter::GetPlayersStavkaUP(const std::vector<CActor> &OtherPlayers)
+{
+    return {};
+}
+
+bool CActorFilter::GetFirstPlayerCotoriyPovisilStavky(const std::vector<CActor> &OtherPlayers, CActor & OutputProtivnik)
+{
+    for (auto it = std::rbegin(OtherPlayers); it != std::rend(OtherPlayers); ++it)
+    {
+        //if(it->isEventClearPlayingCardsForOtherPlayer())
+        if( 0 )
+        {
+            // ok
+        }
+        else
+        { // если игрок повысил ставку
+
+            OutputProtivnik = *it ;
+            return true;
+        }
+    }
+
+    return false;
+}
+

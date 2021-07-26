@@ -7,6 +7,9 @@
 #include "SingletonApplication.h"
 #include "interface/input.h"
 
+#include<iostream>
+#include<map>
+#include<algorithm>
 
 
 int main(int argc, char *argv[])

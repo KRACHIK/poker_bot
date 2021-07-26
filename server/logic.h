@@ -113,6 +113,38 @@ class CActorFilter
 {
 public:
     static bool FindPlayerByPossition( const std::vector<CActor> &OtherPlayers, const CGamePosition &FindPosition, CActor & OutputPlayers );
+
+    /* вернет true если каждый игрок из массива сбросил свои карты*/
+    static bool IsAllEventClearPlayingCards ( const std::vector<CActor> &OtherPlayers );
+
+
+    /* вернет true если каждый игрок из массива поднял ставку*/
+    static bool IsAllPlayerUPStavka( const std::vector<CActor> &OtherPlayers );
+
+
+    /* вернет true если каждый игрок из массива сделал одинаковую ставку*/
+    static bool IsAllPlayerEqualStavka ( const std::vector<CActor> &OtherPlayers );
+
+    /* вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value*/
+    static bool IsAllPlayerEqualStavkaNotEqualValue  ( const std::vector<CActor> &OtherPlayers, float Value  );
+
+    /* вернет true если каждый игрок из массива сделал одинаковую ставку равную Value */
+    static bool IsAllPlayerEqualStavka ( const std::vector<CActor> &OtherPlayers, float Value );
+
+
+    /* вернет вектор игроков, которые подняли ставку*/
+    static std::vector<CActor> GetPlayersStavkaUP ( const std::vector<CActor> &OtherPlayers);
+
+
+    /*  предпологается что в OtherPlayers мои соперники, (праввда не знаю в каком порядке)
+    */
+    static bool GetFirstPlayerCotoriyPovisilStavky ( const std::vector<CActor> &OtherPlayers,  CActor & OutputProtivnik);
+
+
+
+
+
+
 };
 
 #endif // LOGIC_H

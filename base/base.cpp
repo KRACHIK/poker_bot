@@ -63,7 +63,7 @@ void CActor::eventClearPlayingCardsForOtherPlayer(int Value)
     m_bEventClearPlayingCardsForOtherPlayer =  true ;
 }
 
-bool CActor::isEventClearPlayingCardsForOtherPlayer()
+bool CActor::isEventClearPlayingCardsForOtherPlayer() const
 {
     return  m_bEventClearPlayingCardsForOtherPlayer ;
 }

@@ -253,7 +253,7 @@ public:
 
    void eventClearPlayingCardsForOtherPlayer(int Value);
 
-   bool isEventClearPlayingCardsForOtherPlayer();
+   bool isEventClearPlayingCardsForOtherPlayer() const;
 
    QString GetStrPointerToPosition() const;
    void SetStrPointerToPosition(const QString &value);
@@ -322,11 +322,11 @@ public:
 enum class EPos: int
 {
     POS_BU = 0
-    ,POS_SB
-    ,POS_BB
-    ,POS_EP
-    ,POS_MP
-    ,POS_CO
+    ,POS_SB // 1
+    ,POS_BB // 2
+    ,POS_EP // 3
+    ,POS_MP // 4
+    ,POS_CO //5
 };
 
 

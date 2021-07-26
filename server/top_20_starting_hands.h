@@ -17,7 +17,7 @@ public:
 
     bool GetStatus( CActor &  Actor ); // del
 
-    bool GetStatus_v2_shared_algo( CActor &  Actor );
+    //bool GetStatus_v2_shared_algo( CActor &  Actor );
 
     std::vector<std::vector<CTexasHoldem> > GetTables() const;
 
