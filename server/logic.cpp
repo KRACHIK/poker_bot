@@ -255,20 +255,27 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
 
     //CDisignMaker::Iskatb_seld_cards_v_zavisimosti_ot_posicii()
 
+    CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : Cmd=" + std::to_string((int)Cmd), EStatus::STATUS_DBG_MSG);
+
     CContainerPosition ContainerPosition;
     if(m_Actor.GetStrPointerToPosition().toStdString() == ContainerPosition.m_Pos[(int)EPos::POS_EP ].d )
     { // EP
-        qCritical() <<  "Артем  [14.07.21 01:42] "
-                      "Сброс карт или увеличение ставки начинается с игрока в позиции UTG,  "
-                      "если мы находимся в позиции UTG  то сразу наш ход и мы ищем карты в таблице 1й столбик UTGsh";
-        assert(false);
+            CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+            "Артем  [14.07.21 01:42] "
+            "Сброс карт или увеличение ставки начинается с игрока в позиции UTG,  "
+            "если мы находимся в позиции UTG  то сразу наш ход и мы ищем карты в таблице 1й столбик UTGsh"
+            , EStatus::STATUS_DBG_MSG);
+
+        //assert(false);
     }
     else if(m_Actor.GetStrPointerToPosition().toStdString() == ContainerPosition.m_Pos[ (int)EPos::POS_MP].d )
     {
         // MP
-        qCritical() <<  " Дальше, если мы в позиции MP,  проверяем повышал ли ставку игрок в UTG, если да то ищем наши карты "
+        CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                        " Дальше, если мы в позиции MP,  проверяем повышал ли ставку игрок в UTG, если да то ищем наши карты "
                         "во втором столбце в таблице vsUTG, если не повышал а сбросил карты, то ищем в первой столбце в "
-                        "таблице MP";
+                        "таблице MP"
+                        , EStatus::STATUS_DBG_MSG);
 
         CActor OtherPlayersWant_MP;
 
@@ -278,34 +285,42 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
         {
             if (OtherPlayersWant_MP.isEventClearPlayingCardsForOtherPlayer() )
             {
-                qCritical() << "PlayerName=" << OtherPlayersWant_MP.PlayerName()
-                            << " Stavka= " << OtherPlayersWant_MP.GetStavka()
-                            << " Сбросил свои карты "
-                            << "ищем в первой столбце в таблице MP";
+
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                                                       "PlayerName=" + OtherPlayersWant_MP.PlayerName().toStdString()
+                                                     + " Stavka= "  +  std::to_string( OtherPlayersWant_MP.GetStavka()  )
+                                                     + " Сбросил свои карты "
+                                                     + "ищем в первой столбце в таблице MP"
+                            , EStatus::STATUS_DBG_MSG);
             }
             else
             {
-                qCritical() << " PlayerName=" << OtherPlayersWant_MP.PlayerName()
-                            << " Stavka= " << OtherPlayersWant_MP.GetStavka()
-                            << " повышал  ставку "
-                            << " ищем наши карты во втором столбце в таблице vsUTG";
-
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                              " PlayerName="  + OtherPlayersWant_MP.PlayerName().toStdString()
+                            + " Stavka= "  + std::to_string( OtherPlayersWant_MP.GetStavka() )
+                            + " повышал  ставку "
+                            + " ищем наши карты во втором столбце в таблице vsUTG"
+                        , EStatus::STATUS_DBG_MSG);
             }
         }
         else
         {
-            qCritical() << "1игрока не существует, то есть за игровым столом не 6 человек";
+            CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                                       "1игрока не существует, то есть за игровым столом не 6 человек"
+                    , EStatus::STATUS_DBG_MSG);
         }
 
 
-        assert(false);
+        //assert(false);
     }
     else if(m_Actor.GetStrPointerToPosition().toStdString() == ContainerPosition.m_Pos[(int)EPos::POS_CO].d /*CO*/ )
     {
 
-        qCritical() << "Дальше если мы в CO проверяем ходы игроков в UTG и MP и если кто-то сделал ставку "
+        CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                       "Дальше если мы в CO проверяем ходы игроков в UTG и MP и если кто-то сделал ставку "
                        "ищем во втором столбце в таблице vsUTG или vsMp, в зависимости откуда ставка, "
-                       "если сбросили, то ищем в первой колонке в таблице Co ";
+                       "если сбросили, то ищем в первой колонке в таблице Co "
+                , EStatus::STATUS_DBG_MSG);
 
         //mp=4
         //EP=UTG=3
@@ -323,41 +338,59 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
                  && OtherPlayersWant_EP.isEventClearPlayingCardsForOtherPlayer()
                     )
             {
-               qCritical()
-                       << " PlayerName=" << OtherPlayersWant_MP.PlayerName() << " PlayerName=" << OtherPlayersWant_EP.PlayerName()
-                           << " Оба игрока сбросили свои карты";
+
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                    " PlayerName="  + OtherPlayersWant_MP.PlayerName().toStdString()  + " PlayerName="  + OtherPlayersWant_EP.PlayerName().toStdString() +
+                    " Оба игрока сбросили свои карты"
+                    , EStatus::STATUS_DBG_MSG);
             }
             else if (
                      !OtherPlayersWant_MP.isEventClearPlayingCardsForOtherPlayer()
                   && !OtherPlayersWant_EP.isEventClearPlayingCardsForOtherPlayer()
                      )
             {
-                qCritical()  << " PlayerName=" << OtherPlayersWant_MP.PlayerName() << " PlayerName=" << OtherPlayersWant_EP.PlayerName()
-                            << "Оба игрока повысили свою ставку";
+
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                      " PlayerName=" + OtherPlayersWant_MP.PlayerName().toStdString() +  " PlayerName="  + OtherPlayersWant_EP.PlayerName().toStdString()
+                     +"Оба игрока повысили свою ставку"
+                        , EStatus::STATUS_DBG_MSG);
 
                 if ( OtherPlayersWant_MP.GetStavka() ==  OtherPlayersWant_EP.GetStavka() )
                 {
-                    qCritical()  << " PlayerName=" << OtherPlayersWant_MP.PlayerName() << " PlayerName=" << OtherPlayersWant_EP.PlayerName()
-                                << "Оба игрока повысили свою ставку на одинаковое значение";
+
+
+                    CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                     " PlayerName="  + OtherPlayersWant_MP.PlayerName().toStdString() + " PlayerName="  + OtherPlayersWant_EP.PlayerName().toStdString()
+                    +" Оба игрока повысили свою ставку на одинаковое значение"
+                    , EStatus::STATUS_DBG_MSG);
 
                 }
-                else {
-                    qCritical()  << " PlayerName=" << OtherPlayersWant_MP.PlayerName() << " PlayerName=" << OtherPlayersWant_EP.PlayerName()
-                                << " на разное значение значение";
+                else
+                {
+                    CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                            " PlayerName=" + OtherPlayersWant_MP.PlayerName().toStdString() + " PlayerName=" + OtherPlayersWant_EP.PlayerName().toStdString()
+                            +" на разное значение значение"
+                        , EStatus::STATUS_DBG_MSG);
                 }
 
 
             }
             else if (  !OtherPlayersWant_MP.isEventClearPlayingCardsForOtherPlayer())
             {
-                qCritical()  << " PlayerName=" << OtherPlayersWant_MP.PlayerName()
-                            << "только один игрок повысил свою ставку";
+
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                 " PlayerName=" + OtherPlayersWant_MP.PlayerName().toStdString()
+                             + "только один игрок повысил свою ставку"
+                        , EStatus::STATUS_DBG_MSG);
             }
 
             else if (  !OtherPlayersWant_EP.isEventClearPlayingCardsForOtherPlayer())
             {
-                qCritical()  << " PlayerName=" << OtherPlayersWant_EP.PlayerName()
-                            << "только один игрок повысил свою ставку";
+
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                      " PlayerName="  +  OtherPlayersWant_EP.PlayerName().toStdString()
+                     +" только один игрок повысил свою ставку"
+                    , EStatus::STATUS_DBG_MSG);
             }
 
 
@@ -366,17 +399,22 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
         {
             if (OtherPlayersWant_MP.isEventClearPlayingCardsForOtherPlayer() )
             {
-                qCritical() << "PlayerName=" << OtherPlayersWant_MP.PlayerName()
-                            << " Stavka= " << OtherPlayersWant_MP.GetStavka()
-                            << " Сбросил свои карты "
-                            << "ищем в первой столбце в таблице  ?";
+
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                      "PlayerName=" + OtherPlayersWant_MP.PlayerName().toStdString()
+                    + " Stavka= " + std::to_string(  OtherPlayersWant_MP.GetStavka() )
+                    + " Сбросил свои карты "
+                    + "ищем в первой столбце в таблице  ?"
+                    , EStatus::STATUS_DBG_MSG);
             }
             else
             {
-                qCritical() << " PlayerName=" << OtherPlayersWant_MP.PlayerName()
-                            << " Stavka= " << OtherPlayersWant_MP.GetStavka()
-                            << " повышал  ставку "
-                            << " ищем наши карты во  ? ";
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                            " PlayerName="  + OtherPlayersWant_MP.PlayerName().toStdString()
+                            +" Stavka= "  + std::to_string( OtherPlayersWant_MP.GetStavka() )
+                            +" повышал  ставку "
+                            +" ищем наши карты во  ? "
+                        , EStatus::STATUS_DBG_MSG);
 
             }
         }
@@ -384,32 +422,41 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
         {
             if (OtherPlayersWant_EP.isEventClearPlayingCardsForOtherPlayer() )
             {
-                qCritical() << "PlayerName=" << OtherPlayersWant_EP.PlayerName()
-                            << " Stavka= " << OtherPlayersWant_EP.GetStavka()
-                            << " Сбросил свои карты "
-                            << "ищем в первой столбце в таблице  ?";
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                       "PlayerName=" + OtherPlayersWant_EP.PlayerName().toStdString()
+                        +" Stavka= "  + std::to_string( OtherPlayersWant_EP.GetStavka() )
+                        +" Сбросил свои карты "
+                        +"ищем в первой столбце в таблице  ?"
+                , EStatus::STATUS_DBG_MSG);
             }
             else
             {
-                qCritical() << " PlayerName=" << OtherPlayersWant_EP.PlayerName()
-                            << " Stavka= " << OtherPlayersWant_EP.GetStavka()
-                            << " повышал  ставку "
-                            << " ищем наши карты во  ? ";
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                            " PlayerName=" + OtherPlayersWant_EP.PlayerName().toStdString()
+                            + " Stavka= " + std::to_string( OtherPlayersWant_EP.GetStavka() )
+                            + " повышал  ставку "
+                            + " ищем наши карты во  ? "
+                        , EStatus::STATUS_DBG_MSG);
 
             }
         }
         else
         {
-            qCritical() <<  "Оба игрока отсутствуют за игровым столом";
+            CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                "Оба игрока отсутствуют за игровым столом"
+                , EStatus::STATUS_DBG_MSG);
         }
 
-        assert(false);
+        //assert(false);
     }
     else if(m_Actor.GetStrPointerToPosition().toStdString() == ContainerPosition.m_Pos[(int)EPos::POS_BU].d   )
     {
-        qCritical() << "Если мы позиции BU всё аналогично проверяем ходы игроков UTG MP Co,"
-                       "если кто-то сделал ставку ищем в таблицах второй колонки vsUTG vsMp vsCO,"
-                       "если все сбросили карты, то ищем в первой колонке BU ";
+
+        CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                "Если мы позиции BU всё аналогично проверяем ходы игроков UTG MP Co,"
+                "если кто-то сделал ставку ищем в таблицах второй колонки vsUTG vsMp vsCO,"
+                "если все сбросили карты, то ищем в первой колонке BU "
+                , EStatus::STATUS_DBG_MSG);
 
         //mp=4
         //EP=UTG=3
@@ -434,21 +481,33 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
         { /* вернет true если каждый игрок из массива сделал одинаковую ставку равную Value */
             if(CActorFilter::IsAllPlayerEqualStavka ( Protivnik,  /*Value*/ 1 ))
             {
-                qCritical() << "вернет true если каждый игрок из массива сделал одинаковую ставку равную 1";
-                qCritical () << "Find in BU OPEN За исключение оранжевого с двумя подчеркиваниями";
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                    "вернет true если каждый игрок из массива сделал одинаковую ставку равную 1"
+                    , EStatus::STATUS_DBG_MSG);
+
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                    "Find in BU OPEN За исключение оранжевого с двумя подчеркиваниями"
+                    , EStatus::STATUS_DBG_MSG);
             }
             else if(CActorFilter::IsAllPlayerEqualStavkaNotEqualValue ( Protivnik,  /*Value*/ 1 ))
             { /* вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value*/
-
-                    qCritical () << "  искать карты в  [ vs UTG]  ";
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                "  искать карты в  [ vs UTG]  "
+                , EStatus::STATUS_DBG_MSG);
             }
             else if (CActorFilter::IsAllPlayerUPStavka( Protivnik ))
             { /* вернет true если каждый игрок из массива поднял ставку*/
-                qCritical () << "Искать в vs4b в таблице под vs CO";
+
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                      "Искать в vs4b в таблице под vs CO"
+                    , EStatus::STATUS_DBG_MSG);
             }
             else if (CActorFilter::IsAllEventClearPlayingCards(Protivnik))
             { // если все сбросили
-                qCritical () << "Find in BU OPEN ";
+
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                 "Find in BU OPEN "
+                , EStatus::STATUS_DBG_MSG);
             }
             else
             {  // ставку сделало только несколько человек это могут быть пары  <EP> и <MP> или <MP> и <CO> или <EP> и <CO>
@@ -458,7 +517,10 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
                  if(CActorFilter::IsAllPlayerEqualStavka ( ProtivnikStavkaUP,  /*Value*/ 1 ))
                  {
                      qCritical() << "вернет true если  2 игрока из массива сделал одинаковую ставку равную 1";
-                     qCritical () << "Find in BU OPEN За исключение оранжевого с двумя подчеркиваниями";
+
+                     CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                       "Find in BU OPEN За исключение оранжевого с двумя подчеркиваниями"
+                        , EStatus::STATUS_DBG_MSG);
                  }
                  else  if(CActorFilter::IsAllPlayerEqualStavkaNotEqualValue ( ProtivnikStavkaUP,  /*Value*/ 1 ))
                  { /* вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value*/
@@ -470,11 +532,15 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
                      qCritical () << "получить Указатель на позицию соперника слева от меня, который поднял ставку";
                      if ("CO")
                      {
-                         qCritical () << "искать в vs CO (за исключением белых картр)";
+                         CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                         "искать в vs CO (за исключением белых картр)"
+                                 , EStatus::STATUS_DBG_MSG);
                      }
                      else if ("MP")
                      {
-                         qCritical () << "искать в vs Mp (за исключением белых картр)";
+                        CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                        "искать в vs Mp (за исключением белых картр)"
+                        , EStatus::STATUS_DBG_MSG);
                      }
                  }
             }
@@ -486,20 +552,29 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
                 /* вернет true если каждый игрок из массива сделал одинаковую ставку равную Value */
                 if(CActorFilter::IsAllPlayerEqualStavka ( Protivnik,  /*Value*/ 1 ))
                 {
-                    qCritical () << "искать карты в  [BU_OPEN] за исключением Оранжевого с двумя подчеркиванием";
+                    CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                        "искать карты в  [BU_OPEN] за исключением Оранжевого с двумя подчеркиванием"
+                            , EStatus::STATUS_DBG_MSG);
                 }
                 else  if(CActorFilter::IsAllPlayerEqualStavkaNotEqualValue ( Protivnik,  /*Value*/ 1 ))
                 { /* вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value*/
-                    qCritical () << "vs MP  за исключением белых";
+                    CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                                        "vs MP  за исключением белых"
+                                        , EStatus::STATUS_DBG_MSG);
                 }
                 else if ( CActorFilter::IsAllPlayerUPStavka( Protivnik ))
                 {  // подняли на разное ?
-                    qCritical () << "Искать в vs4b в таблице под vs CO";
+                    CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                      "Искать в vs4b в таблице под vs CO"
+                    , EStatus::STATUS_DBG_MSG);
                 }
             }
             else if (CActorFilter::IsAllEventClearPlayingCards(Protivnik))
-            { // все сбросили
-                qCritical () << "Find in BU OPEN ";
+            { //
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                    " все сбросили"
+                    "Find in BU OPEN "
+                , EStatus::STATUS_DBG_MSG);
             }
         }
         else if (Protivnik.size() == 1)
@@ -508,53 +583,71 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
             {  // подняли  ?
                 if(CActorFilter::IsAllPlayerEqualStavka ( Protivnik,  /*Value*/ 1 ))
                 {
-                    qCritical () << "искать карты в  [BU_OPEN] за исключением Оранжевого с двумя подчеркиванием";
+                    CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                    "искать карты в  [BU_OPEN] за исключением Оранжевого с двумя подчеркиванием"
+                            , EStatus::STATUS_DBG_MSG);
                 }
                 else if(CActorFilter::IsAllPlayerEqualStavkaNotEqualValue ( Protivnik,  /*Value*/ 1 ))
                 { /* вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value*/
-                    qCritical () << "vs CO за исключением белых";
+                    CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                     "vs CO за исключением белых"
+                    , EStatus::STATUS_DBG_MSG);
                 }
 
             }
             else if (CActorFilter::IsAllEventClearPlayingCards(Protivnik))
             { // все сбросили
-                qCritical () << "Find in BU OPEN ";
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                "Find in BU OPEN "
+                        , EStatus::STATUS_DBG_MSG);
             }
         }
         else if (Protivnik.empty())
         {
-            qCritical () << "Find in BU OPEN ";
+            CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+             "Find in BU OPEN "
+                    , EStatus::STATUS_DBG_MSG);
         }
 
 
         /* вернет true если каждый игрок из массива сделал одинаковую ставку равную Value */
         if(CActorFilter::IsAllPlayerEqualStavka ( Protivnik,  /*Value*/ 1 ))
         {
-            qCritical() << "вернет true если каждый игрок из массива сделал одинаковую ставку равную 1";
-            qCritical() << "Find in BU OPEN За исключение оранжевого с двумя подчеркиваниями" ;
+            //  "вернет true если каждый игрок из массива сделал одинаковую ставку равную 1";
+            CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+            "Find in BU OPEN За исключение оранжевого с двумя подчеркиваниями"
+                    , EStatus::STATUS_DBG_MSG);
         }
         else  if(CActorFilter::IsAllPlayerEqualStavkaNotEqualValue ( Protivnik,  /*Value*/ 1 ))
         { /* вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value*/
-                qCritical() << "вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value";
-                qCritical() << "Find in vs UTG";
+                //  "вернет true если каждый игрок из массива сделал одинаковую ставку Не равную Value";
+            CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                                    "Find in vs UTG"
+                                    , EStatus::STATUS_DBG_MSG);
         }
         else if ( CActorFilter::IsAllPlayerUPStavka( Protivnik ))
         { /* вернет true если каждый игрок из массива поднял ставку*/
             qCritical () << "получить указатель на позицию игрока слева от меня который поднял ставку";
             if ("CO")
             {
-                qCritical () << "искать VS CO за исключеним белых";
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                                          "искать VS CO за исключеним белых"
+                                        , EStatus::STATUS_DBG_MSG);
             }
             else if ("MP")
             {
-                qCritical () << "искать VS MP за исключеним белых";
+                CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                                          "искать VS MP за исключеним белых"
+                                          , EStatus::STATUS_DBG_MSG);
             }
         }
 
 
         if ( CActorFilter::IsAllEventClearPlayingCards (Protivnik) )
         { // если каждый игрок сбросил свои карты
-            qCritical() << "каждый игрок сбросил свои карты";
+            CServerNetwork::ServerSay("[SingletonServerLogic::Execut] : "
+                                      "каждый игрок сбросил свои карты"
+                        , EStatus::STATUS_DBG_MSG);
         }
         else
         { // если не каждый игрок сбросил свои карты, то проверяем ,
@@ -574,7 +667,7 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
                     else
                     {
                         // критическая ошибка
-                        assert(false);
+                        //assert(false);
                     }
                 }
 
@@ -607,8 +700,6 @@ void SingletonServerLogic::Execut(ECOMMAND Cmd)
 
 
     }
-
-
 
 
     auto GetPlayerCotoriySdelalHodPeredomnoy = [] (std::vector<CActor> OtherPlayers, size_t SelfIndex

@@ -79,6 +79,11 @@ void SingletonApplication::setFormRenderInfo(CRenderInfo *pFormRenderInfo)
     m_pFormRenderInfo = pFormRenderInfo;
 }
 
+CRenderInfo *SingletonApplication::GetFormRenderInfo() const
+{
+    return m_pFormRenderInfo;
+}
+
 std::vector<CActor> SingletonApplication::GetOtherPlayer()
 {
     return m_OtherPlayers;

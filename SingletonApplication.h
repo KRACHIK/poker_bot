@@ -53,6 +53,8 @@ public:
 
     void setFormRenderInfo(CRenderInfo *pFormRenderInfo);
 
+    CRenderInfo *GetFormRenderInfo() const;
+
 private:
     CActor * m_PtrActor = nullptr; // Это модель которая иметирует нас
     CInput * m_pUserInputForm;

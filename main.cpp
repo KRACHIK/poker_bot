@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
      CFormCheatServerAction FormCheatServerAction;
 
      SingletonApplication::GetInstance().SetUserInputForm(&UserInputForm);
+     SingletonApplication::GetInstance().setFormRenderInfo(&FormRenderInfo);
 
      context->setContextProperty("FormDefaultPlayerAction", &FormDefaultPlayerAction);
      context->setContextProperty("FormRenderInfo", &FormRenderInfo);

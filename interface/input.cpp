@@ -368,6 +368,11 @@ void CRenderInfo::dbg()
 
 #endif
 
+void CRenderInfo::RenderDbgMsg(std::string Msg)
+{
+    emit setText_dbg_msg(Msg.c_str());
+}
+
 void CRenderInfo::updateForm(){
     showTable();
 }

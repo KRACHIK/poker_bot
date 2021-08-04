@@ -27,6 +27,16 @@ ApplicationWindow {
     }
 
 
+
+    Connections
+     {
+         target: FormRenderInfo
+
+        onSetText_dbg_msg : {
+            text_dbg_msg.text = str
+        }
+    }
+
     Text {
         x: 10; y: 9
         text: qsTr("1. Действие Инициализация игрового стола. (Написать имя игрока нажать на кнопку confirm)")
@@ -110,11 +120,38 @@ ApplicationWindow {
     }
 
     Button {
-        x: 18
-        y: 337
+        x: 10
+        y: 249
 
         text: "пока не используется"
     }
+
+    Text {
+        id: text_dbg_msg
+        x: 10
+        y: 294
+        width: 368
+        height: 153
+        text: qsTr("Label: DEBUG_MSG Label: DEBUG_MSG Label: DEBUG_MSG Label: DEBUG_MSG Label: DEBUG_MSG Label: DEBUG_MSG Label: DEBUG_MSG Label: DEBUG_MSG")
+        textFormat: Text.WrapAtWordBoundaryOrAnywhere
+        wrapMode: TextEdit.WordWrap
+    }
+
+    // Text {
+    //     id: text_dbg_msg
+    //     x: 65
+    //     y: 445
+    //     text: qsTr("dbg msg")
+    // }
+
+    TextField {
+        x: 183; y: 212; width: 169; height: 37
+        id : text_UTG_SH2
+        text: "qml not init"
+
+
+    }
+
 
 
 }

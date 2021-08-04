@@ -82,9 +82,17 @@ bool CServerNetwork::ServerSay( CServerLogicAnswerData  ServerLogicAnswerData)
 bool CServerNetwork::ServerSay(std::string Msg, EStatus Status)
 {
     qDebug() << "[" << __FUNCTION__ << "] : ";
+
+
+    qCritical() << Msg.c_str();
+
     //SingletonApplication::GetInstance().Send();
 
     //ServerLogicAnswerData
+    if(Status == EStatus::STATUS_DBG_MSG)
+    {
+        SingletonApplication::GetInstance().GetFormRenderInfo()->RenderDbgMsg(Msg);
+    }
 
     SingletonApplication::GetInstance().GetPtrUserInputForm()->sendToQml(-13);
     return false;
@@ -98,6 +106,11 @@ bool CServerNetwork::ServerSayInitStol(std::string Msg)
     // kr4 SingletonApplication::GetInstance().GetPtrUserInputForm()->showTable();
     //SingletonApplication::GetInstance().GetPtrUserInputForm()->renderSelfCard();
     return true;
+}
+
+void CServerNetwork::ServerSay(const std::string &DbgMsg)
+{
+    SingletonApplication::GetInstance().GetFormRenderInfo()->RenderDbgMsg(DbgMsg);
 }
 
 void CServerNetwork::ClientSay(CActor Actor)

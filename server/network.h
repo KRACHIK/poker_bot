@@ -9,10 +9,12 @@ public:
     CServerNetwork();
 
 
-    bool ServerSay( CServerLogicAnswerData   ServerLogicAnswerData );
+    bool ServerSay( CServerLogicAnswerData ServerLogicAnswerData );
 
-    bool ServerSay(std::string Msg, EStatus Status);
+    static bool ServerSay(std::string Msg, EStatus Status);
     bool ServerSayInitStol(std::string Msg );
+
+    static void ServerSay(const std::string &DbgMsg);
 
     void ClientSay( CActor  Actor );
 

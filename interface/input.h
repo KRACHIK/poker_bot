@@ -10,12 +10,12 @@ class CRenderInfo : public QObject
 {
     Q_OBJECT
 
-
 public:
     explicit CRenderInfo(QObject *parent = nullptr)  : QObject(parent)
     {
     }
 
+    void RenderDbgMsg(std::string Msg);
 signals:
     void addLinesToTable(
             int     int_INDEX
@@ -35,10 +35,12 @@ signals:
     void setIndicatorSecondPlayerCard (QString str);
 
     void tara(QString str);
+    void setText_dbg_msg(QString str);
 
 public slots:
     void updateForm();
     void showTable();
+
 
 };
 

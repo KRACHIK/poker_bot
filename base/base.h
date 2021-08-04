@@ -27,6 +27,7 @@ enum EStatus
     STATUS_ERROR,
     STATUS_FIND,
     STATUS_NOT_FIND,
+    STATUS_DBG_MSG,
     STATUS_COUNT
 };
 
